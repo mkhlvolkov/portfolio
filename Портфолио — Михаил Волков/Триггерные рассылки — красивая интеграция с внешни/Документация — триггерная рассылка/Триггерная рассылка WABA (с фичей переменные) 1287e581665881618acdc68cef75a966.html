@@ -1,0 +1,730 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Триггерная рассылка WABA (с фичей переменные)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1287e581-6658-8161-8acd-c68cef75a966" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">👌🏻</span></div><h1 class="page-title" dir="auto">Триггерная рассылка WABA (с фичей переменные)</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><div id="1287e581-6658-817a-b51e-e89f966535bd" class="column-list"><div style="display:contents" dir="auto"><div id="1287e581-6658-8138-9927-f66ed775e516" style="width:50%" class="column"><div style="display:contents" dir="ltr"><nav id="1287e581-6658-8132-ab99-c1e578979e74" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1287e581-6658-81e3-9cae-faade7cf4d6b">Общее</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1287e581-6658-814d-b7ab-ca65f5a1b34a">Основная страница</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1287e581-6658-8113-b080-f4a605054e5b">Статистика</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1287e581-6658-8135-b69c-f3d41baf63d6">Незапланированные остановки рассылок</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1287e581-6658-8158-a952-da39a500876e">Тариф закончился</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1287e581-6658-8100-93d9-e8a6578a5b90"><strong>Кончился баланс</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1287e581-6658-8126-bf2a-f09dafaf299c">Чат-бот отключили</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1287e581-6658-81e9-b622-fa848d6c496e">Создание рассылки</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1287e581-6658-8176-8d8d-ee9850af0607"><strong>Сценарий создания рассылки</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1287e581-6658-8149-93fc-fa17772eb214">Настройка триггера</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1287e581-6658-817a-bb76-c94ed2aaffe6">Настройка шаблона</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1287e581-6658-811f-a128-f8cf65a55985">Отправка с задержкой</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1287e581-6658-81d2-9229-e082f868bd85">Отправить себе</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1287e581-6658-8130-a704-ced1b3837edf">Редактирование рассылки</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1287e581-6658-81bb-b794-f4d7734ad390">Тосты и уведомления</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1287e581-6658-8111-8125-cd41c48e3ab5">Тултипы</a></div></nav></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81a7-9aca-fc379b59ef25" class="">
+</p></div></div></div><div style="display:contents" dir="auto"><div id="1287e581-6658-813e-9b6c-c866af9366fa" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="1287e581-6658-817f-b613-e6d94b0d5dc6" class="link-to-page"><a href="%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B0%20WABA%20(%D1%81%20%D1%84%D0%B8%D1%87%D0%B5%D0%B9%20%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5)/API%201287e5816658817fb613e6d94b0d5dc6.html"><span class="icon">🛫</span>API </a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><h1 id="1287e581-6658-81e3-9cae-faade7cf4d6b" class="">Общее</h1></div><div style="display:contents" dir="auto"><p id="1287e581-6658-819c-8e0d-f343a2e21a15" class=""><strong>Триггерная рассылка</strong> — автоматическое сообщение (шаблон), которое отправляется кастомеру с наступлением определенного события.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81df-959c-f9cc7039ebe1" class=""><strong>Вебхук</strong> — это программный код, с помощью которого отслеживают изменения на одном сайте и передают данные об этом на другой.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-811b-9ce3-cfbface767b4" class="">Для того чтобы рассылка работала корректно, необходима предварительная настройка. Настройка событий происходит в CRM или сервисе откуда планируется получать вебхуки.  </p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8162-82f5-f47caed5a43b" class="">
+</p></div><div style="display:contents" dir="auto"><h1 id="1287e581-6658-814d-b7ab-ca65f5a1b34a" class="">Основная страница</h1></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-8113-b506-e02373da8bc4"><div style="font-size:1.5em"><span class="icon">📎</span></div><div style="width:100%"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1215-115229&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></div></figure></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81c5-a5c1-ff35617a1497" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8105-bb03-f39481c1df92" class="">Когда у пользователя еще нет триггерных рассылок, отображаем пустое состояние раздела.<a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-29375&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11"> </a><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-29375&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81a2-b2bf-ffaaaecf08dc" class="">При нажатии на тоггл рассылка активируется/выключается. У черновика тоггл в состоянии disabled, а при наведении на него появляется хинт с пояснением. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-29410&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-814c-8623-d24b34bbbf7a" class="">При нажатии на строку рассылки открывается страница с предзаполненными настройками рассылки. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-44703&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8183-9373-f243813acea6" class="">Чипсы работают как фильтр по статусу рассылки.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81f6-80c0-d9e959f58a40" class="">При отключении триггерной рассылки, если есть очередь для отправки в ней, выводим диалоговое окно. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1215-88003&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81de-be1b-e8be0ba659ba" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="1287e581-6658-8113-b080-f4a605054e5b" class="">Статистика</h2></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-81da-96c3-edc6e19f1fc9" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81a4-aed0-c536374d6107"><th id="BSiu" class="simple-table-header-color simple-table-header">Название</th><th id="@j\o" class="simple-table-header-color simple-table-header" style="width:110px">Тип данных</th><th id="fF{P" class="simple-table-header-color simple-table-header" style="width:468px">Как считаем (откуда берем)</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81b5-bac7-cbf7af1fccab"><td id="BSiu" class="">Дата создания</td><td id="@j\o" class="" style="width:110px">Число</td><td id="fF{P" class="" style="width:468px">Указывается текущая дата на момент создания рассылки</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8175-bbc6-cb6ecdf1d53a"><td id="BSiu" class="">Рассылка</td><td id="@j\o" class="" style="width:110px">Текст</td><td id="fF{P" class="" style="width:468px">Название рассылки со второго шага создания её</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81f3-83b5-db5e65542af6"><td id="BSiu" class="">Канал</td><td id="@j\o" class="" style="width:110px">Текст</td><td id="fF{P" class="" style="width:468px">Канал с которого отправляются сообщения</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8124-ab69-c895a530ade7"><td id="BSiu" class="">Отправлено</td><td id="@j\o" class="" style="width:110px">Число / число</td><td id="fF{P" class="" style="width:468px">Количество фактически отправленных сообщений / Количество контактов из базы, по которым планировалась рассылка. Т.е. Если есть задержка/очсередь на отправку, то второе число будет больше чем первое.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8125-b975-dcee51e8b277"><td id="BSiu" class="">Доставлено</td><td id="@j\o" class="" style="width:110px">Число</td><td id="fF{P" class="" style="width:468px">Количество кастомеров получивших рассылку, считаем из числа фактически отправленных</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8150-a595-d28efb22e097"><td id="BSiu" class="">Прочитано</td><td id="@j\o" class="" style="width:110px">Число</td><td id="fF{P" class="" style="width:468px">Количество кастомеров прочитавших рассылку, считаем из числа фактически отправленных</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8155-8476-ef8f4fd72ce7"><td id="BSiu" class="">Целевое действие</td><td id="@j\o" class="" style="width:110px">Число</td><td id="fF{P" class="" style="width:468px">Количество нажатий на кнопку-ссылку/ответов. <br/><br/>Как считается целевое действие: <br/>• рассылка с кнопкой-ссылкой — считаем только клики по ссылке<br/>• рассылка с двумя ссылками на телефон и на сайт - считаем только клики по ссылке<br/>• рассылка с кнопкой-телефоном - считает только ответы<br/>• рассылка с кнопками быстрого ответа - считаем только ответы<br/>• рассылка без кнопок - считаем только ответы, независимо от того, есть ли ссылки в тексте</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81c8-91e6-dacd49b990b6" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="1287e581-6658-8135-b69c-f3d41baf63d6" class="">Незапланированные остановки рассылок</h2></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-8158-a952-da39a500876e" class="">Тариф закончился</h3></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8132-afbe-d29f4e28d32b" class="">Раздел блокируется, все рассылки отключаются. Очередь сохраняется. </p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-8100-93d9-e8a6578a5b90" class=""><strong>Кончился баланс</strong></h3></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-8161-88ee-f32901c24d1e"><div style="font-size:1.5em"><span class="icon">📎</span></div><div style="width:100%"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-30229&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></div></figure></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81fd-b125-e305905d7a5d" class="">Когда у пользователя недостаточно средств для отправки триггерной рассылки, мы выводим алерт о необходимости пополнить баланс на основной странице триггерных рассылок. Все рассылки уходят в состояние off-disabled. После пополнения баланса, рассылки которые были включеные до окончания средств включаются снова.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81ef-bd77-cee302b3b250" class="">В боковом меню появляется красный бейдж у раздела триггерная рассылка, и исчезает в когда проблема устранена.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-818f-8708-e5585585170f" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-8126-bf2a-f09dafaf299c" class="">Чат-бот отключили</h3></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-8194-bfad-e27f2118bd7e"><div style="font-size:1.5em"><span class="icon">📎</span></div><div style="width:100%"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-32551&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></div></figure></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81d6-b35a-ff1832c9d990" class="">В случае, если чат-бот подключенный к триггерной рассылке перестает работать или его отключают, триггерная рассылка останавливается и выводится иконка в строке бота.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81da-bafc-fa2629bfb898" class="">По нажатию на неё выводится тултип с описанием проблемы.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-814f-8b63-c3bb47ada06d" class="">В боковом меню появляется красный бейдж у раздела триггерная рассылка, и исчезает в когда проблема устранена.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8165-aa3b-c1b50667983f" class="">
+</p></div><div style="display:contents" dir="auto"><h1 id="1287e581-6658-81e9-b622-fa848d6c496e" class="">Создание рассылки</h1></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-81af-a75f-ec0727588f60"><div style="font-size:1.5em"><span class="icon">📎</span></div><div style="width:100%"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1215-86147&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></div></figure></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8169-ae7d-c8a12cd385b2" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8159-8f4d-dcb47a773710" class="">При нажатии на создать рассылку отображаем модальное окно с выбором канала для отправки. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-29966&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81ea-a10e-cb02649216fe" class="">Если в Wa-Web несколько каналов, то появляется дополнительный шаг при создании рассылки. Если канал только 1, то не отображаем этот шаг. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-30081&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-810a-9ada-f6a80163654b" class="">У bottom-bar fix position при скролле. Всегда закреплен снизу экрана.</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-8176-8d8d-ee9850af0607" class=""><strong>Сценарий создания рассылки</strong></h3></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-819c-b9cb-f65c9ac09e98" class="numbered-list" start="1"><li>Пользователь нажимает на кнопку <em>Создать рассылку </em>на основной странице </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-81a3-9664-c6f1df51b0c7" class="numbered-list" start="2"><li>Выбирает канал для которого будет создаваться рассылка</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-81c6-89f8-c029192935c2" class="numbered-list" start="3"><li>Переходит в раздел создания рассылки</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-817b-a07a-fdc56022cc0c" class="numbered-list" start="4"><li>Задает название рассылки</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-81df-be3f-c20904083362" class="numbered-list" start="5"><li>Настраивает триггер. <div style="display:contents" dir="auto"><ol type="a" id="1287e581-6658-8154-830d-fcfbad540bb9" class="numbered-list" start="1"><li>Копирует URL из поля</li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="1287e581-6658-818d-a35c-fb238e379a49" class="numbered-list" start="2"><li>Идет в свою CRM, там настраивает при каких условиях срабатывает триггер</li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="1287e581-6658-818a-9fbf-eefe94f8ef21" class="numbered-list" start="3"><li>Вставляет ранее скопированный URL, для отправки вебхука</li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="1287e581-6658-81d1-a41d-e5da14c79adc" class="numbered-list" start="4"><li>Возвращается в нашу систему</li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="1287e581-6658-81f0-8bc4-e2525b1ee16c" class="numbered-list" start="5"><li>Тестирует получаемый вебхук в системе, нажав на кнопку <em>Проверить</em><div style="display:contents" dir="auto"><ol type="i" id="1287e581-6658-81cf-bfb1-d2a5e1ff85ef" class="numbered-list" start="1"><li>Если все ок, отображаем последний полученный вебхук и переходит к шагу 6</li></ol></div><div style="display:contents" dir="auto"><ol type="i" id="1287e581-6658-81ff-9d85-e17d7d4b8699" class="numbered-list" start="2"><li>Если не ок, выводим ошибку и отправляем перенастраивать вебхук</li></ol></div></li></ol></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-81ac-a9f4-fd55ab7f50a2" class="numbered-list" start="6"><li>Выбирает переменную из полученного вебхука содержащую телефон</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-815f-be71-dfafe749a03d" class="numbered-list" start="7"><li>Настраивает шаблон<div style="display:contents" dir="auto"><ol type="a" id="1287e581-6658-81b9-9ae0-f29eb96e8016" class="numbered-list" start="1"><li>Выбирает шаблон из списка</li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="1287e581-6658-81d5-921e-f016e87131d1" class="numbered-list" start="2"><li>Заполняет редактируемые части, подгружает файлы (по необходимости)</li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="1287e581-6658-81d0-8e65-d750531cd8d9" class="numbered-list" start="3"><li>Выбирает бота для обработки ответов (не обязательно)</li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="1287e581-6658-810f-a68f-c484031b3dff" class="numbered-list" start="4"><li>Настраивает отправку с задержкой (не обязательно)</li></ol></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-8115-8cdc-c048beb510c1" class="numbered-list" start="8"><li>Нажимает активировать</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-81ed-a64e-d336a7dd114d" class="numbered-list" start="9"><li>Его перенаправляет на страницу со списком триггерных рассылок, с тостом об успехе</li></ol></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8135-8adc-f8b72f23a45b" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="1287e581-6658-8149-93fc-fa17772eb214" class="">Настройка триггера</h2></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-8102-8d30-c90c6c459e2f"><div style="font-size:1.5em"><span class="icon">📎</span></div><div style="width:100%"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-45465&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></div></figure></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8114-9ba1-fc1a6189b816" class="">После нажатия на кнопку копировать отображаем хинт с информацией что URL скопирован.<a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-28702&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11"> </a><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-28702&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-812c-ae34-dbad6d7f2182" class="">Если при тестировании вебхука после нажатия на кнопку <em>Проверить,</em> мы не получили никакой запрос - отображаем алерт об ошибке. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-28732&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-818d-bd18-caca747391f3" class="">Если после нажатия на кнопку <em>Проверить</em>, мы получили запрос, но тело запроса пустое - отображаем алерт и выводим дату получения запроса. Кнопку проверить меняем на “получить последний запрос”. Поле для отображения кода скрываем. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-28762&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8116-992a-de0f0654ef2a" class="">Если после нажатия на кнопку <em>Проверить</em>, мы получили запрос и в контейнере есть вебхук мы отображаем его в поле с кодом. Максимальная высота поля 200px, после этого появляется скролл внутри него. </p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81e1-bd63-edb4a771b747" class="">Когда вебхук отображен и мы его распарсили, отображаем следующий шаг “Введите переменную содержащую телефон”. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-28795&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-815e-9b12-e40c1a6ccf86" class="">Пользователь нажимает <em>Выбрать переменную</em>, открывается модальное окно. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-28834&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark><mark class="highlight-blue"> </mark><mark class="highlight-default">В нем пользователь может кликнуть на переменную и она отобразить внизу в разделе “Выбранная переменная”, по нажатию на Сохранить закрываем модальное окно и подставляем переменную.</mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-29079&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81c5-898d-f8089ab99f47" class="">После ввода переменной телефона, расфокуса и проверки на формат отображаем раздел настройки шаблона. </p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-816a-9dc1-febe6174c390" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="1287e581-6658-817a-bb76-c94ed2aaffe6" class="">Настройка шаблона</h2></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-8119-8045-d7d5c54abb7a"><div style="font-size:1.5em"><span class="icon">📎</span></div><div style="width:100%"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-45473&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></div></figure></div><div style="display:contents" dir="auto"><p id="1287e581-6658-812a-a9c6-fecdc28e70b2" class="">После настройки триггера отображаем раздел “настройка шаблона”. В нем изначально есть только инпут-селект для выбора шаблона. Изначально в нем заполнено “Не выбран”, ву дропдауне мы не отображаем этот вариант. </p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81a3-a54c-eaecfea4f652" class="">Когда шаблон выбран, появляются поля для его настройки, предпросмотр+тест сообщения (фиксируется при скролле) и выбор чат-бота. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-30620&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8104-99ef-cf3f12c58bee" class="">Шаблон настраиваться также как в отправке массовых рассылок. Главное отличие - работа с переменными. </p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81dc-89e6-d23b9fcc3bdf" class="">При нажатии на скобки рядом со смайлом, открывается модальное окно для выбора переменной. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-28890&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark><mark class="highlight-blue"> </mark>Пользователь выбирает переменную, также как с телефоном. Проверяем по кавычкам, на правильность ввода и наличие, сами данные в переменной не проверяем. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-32139&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81c8-8e2b-c50bca239385" class="">В инпут-селекте для подключния чат-ботов изначально вариант “не выбран”. Вариант “не выбран” отображаем в дропдауне. Если у пользователя нет ботов select disabled. Боты доступные для выбора - только активные.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8115-bcc3-fb62f75b6068" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-811f-a128-f8cf65a55985" class="">Отправка с задержкой</h3></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-8152-93b3-c2b50aee0611"><div style="font-size:1.5em"><span class="icon">📎</span></div><div style="width:100%"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-31009&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></div></figure></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8116-93c1-f0468c951c40" class="">Отправка с задержкой работает по такому же принципу как в конструкторе чат ботов. Пользователь выбирает время в которые рассылка будет отправляться сразу после срабатывания триггера, в остальное время сообщения попадают в очередь на отправку.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81b0-9f3c-c58c1211df8f" class="">Если пользователь включил отправку с задержкой, поле становится обязательным для заполнения.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8156-bb65-ec97ae637b0f" class="">Если при отключении триггерной рассылки в очереди есть сообщения, выводим диалоговое окно с вопросом о том, что с ними делать. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-44704&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">макет </a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8116-b1a5-eef3d71a9b90" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-81d2-9229-e082f868bd85" class="">Отправить себе</h3></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8190-b738-d450b4287b73" class="">При нажатии на кнопку “Отправить себе” – показываем модальное окно с возможностью ввода номера телефона. Мы отправляем на введенный номер шаблон сообщения, который получился в процессе редактирования. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-32272&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8198-a913-f1d36887da41" class="">После отправки на свой номер телефона – закрываем поп-ап и показываем сообщение в снек-баре о том что оно успешно отправлено. <mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-32419&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8185-8980-f073f05ca04e" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-813b-a1f4-eb7a0465661a" class="">Когда заполнены все настройки шаблона и переменная содержащая телефона, кнопка активировать становится доступной.<a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-32139&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11"> </a><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-32139&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">макет</a></mark></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-811e-bd69-e16bc7aa1249" class="">
+</p></div><div style="display:contents" dir="auto"><h1 id="1287e581-6658-8130-a704-ced1b3837edf" class="">Редактирование рассылки</h1></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-8175-a60b-f90bb6048267"><div style="font-size:1.5em"><span class="icon">📎</span></div><div style="width:100%"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-44703&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></div></figure></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81e0-98a9-dcde17410409" class="">Если при редактировании не было никаких изменений, то кнопка <em>Сохранить</em> - не активна.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8157-be8b-cfae64861dad" class="">
+</p></div><div style="display:contents" dir="auto"><h1 id="1287e581-6658-81bb-b794-f4d7734ad390" class="">Тосты и уведомления</h1></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-8110-b7cc-d00b1ee8a57f" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8192-a55f-cf6519694158"><th id="naLe" class="simple-table-header-color simple-table-header" style="width:234px">Текст</th><th id="NPRj" class="simple-table-header-color simple-table-header" style="width:171px">Где возникает</th><th id="]]Vv" class="simple-table-header-color simple-table-header" style="width:209.3125px">Когда возникает</th><th id="FcpR" class="simple-table-header-color simple-table-header" style="width:70px">Макет</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8187-a103-d9787246a275"><td id="naLe" class="" style="width:234px"><mark class="highlight-teal_background">Вы активировали триггерную рассылку: название рассылки</mark></td><td id="NPRj" class="" style="width:171px">Основная страница</td><td id="]]Vv" class="" style="width:209.3125px">После активации рассылки отображаем тост об успехе</td><td id="FcpR" class="" style="width:70px"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-30339&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ed-b5bb-c1289f4b12d2"><td id="naLe" class="" style="width:234px"><mark class="highlight-gray_background">Сохранен черновик рассылки:<br/>название рассылки</mark></td><td id="NPRj" class="" style="width:171px">Основная страница</td><td id="]]Vv" class="" style="width:209.3125px">После сохранения черновика отображаем тост</td><td id="FcpR" class="" style="width:70px"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-45593&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81e6-bdd1-c5d42902f8cc"><td id="naLe" class="" style="width:234px"><mark class="highlight-teal_background">Вы удалили триггерную рассылку: название рассылки</mark></td><td id="NPRj" class="" style="width:171px">Основная страница</td><td id="]]Vv" class="" style="width:209.3125px">После удаления триггерной рассылки из режима редактирования мы отображаем этот тост.</td><td id="FcpR" class="" style="width:70px"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-30422&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ac-82b1-c41f879e99d6"><td id="naLe" class="" style="width:234px"><mark class="highlight-teal_background">Сообщение успешно отправлено</mark></td><td id="NPRj" class="" style="width:171px">Создание рассылки  </td><td id="]]Vv" class="" style="width:209.3125px">после отправки себе</td><td id="FcpR" class="" style="width:70px"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1215-83323&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8140-8754-e537b66559d6" class="">
+</p></div><div style="display:contents" dir="auto"><h1 id="1287e581-6658-8111-8125-cd41c48e3ab5" class="">Тултипы</h1></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-8192-8cae-e7b778d7995c" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8172-84e3-cb827a54f076"><th id="naLe" class="simple-table-header-color simple-table-header" style="width:401px">Текст</th><th id="NPRj" class="simple-table-header-color simple-table-header" style="width:225px">Где возникает</th><th id="FcpR" class="simple-table-header-color simple-table-header" style="width:70px">Макет</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8164-a6d3-c601c9d49081"><td id="naLe" class="" style="width:401px"><strong>Доставлено<br/></strong>Количество доставленных пользователям сообщений</td><td id="NPRj" class="" style="width:225px">Основная страница/доставлено</td><td id="FcpR" class="" style="width:70px"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-29612&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8168-82ac-e4989c11d49e"><td id="naLe" class="" style="width:401px"><strong>Прочитано<br/></strong>Количество прочитанных пользователем сообщений</td><td id="NPRj" class="" style="width:225px">Основная страница/прочитано</td><td id="FcpR" class="" style="width:70px"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-29695&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81a8-905b-c946af1d473e"><td id="naLe" class="" style="width:401px"><strong>Целевое действие<br/></strong>Количество нажатий на кнопку-ссылку / ответов</td><td id="NPRj" class="" style="width:225px">Основная страница/целевое действие</td><td id="FcpR" class="" style="width:70px"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-29778&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81da-88ba-c5bdb074f9b7"><td id="naLe" class="" style="width:401px"><strong>Чат-бот не активен<br/></strong>Чат-бот, подключенный к триггерной рассылке, отключен. Выберите другой чат-бот для активации рассылки</td><td id="NPRj" class="" style="width:225px">Основная страница/иконка ошибки (ошибка отсутствия чат-бота)</td><td id="FcpR" class="" style="width:70px"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-32551&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-815b-87fb-e700b5fcaa67"><td id="naLe" class="" style="width:401px">Вебхук — способ отправки данных из вашей системы, необходимых для вставки в текст рассылки. Передается методом POST.</td><td id="NPRj" class="" style="width:225px">Создание рассылки/Протестируйте отправку вебхука</td><td id="FcpR" class="" style="width:70px"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-28994&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8177-ad61-f43eeccbe0ec"><td id="naLe" class="" style="width:401px">В этой переменной должен содержаться телефонный номер абонента или массив номеров, разделенных запятой или точкой с запятой. <br/><br/>В номере телефона допустимы дефисы, пробелы, скобки, +7/8.</td><td id="NPRj" class="" style="width:225px">Создание рассылки/Введите переменную, содержащую телефон</td><td id="FcpR" class="" style="width:70px"><mark class="highlight-blue"><a href="https://www.figma.com/file/FJz4g6J3aVRC1T8dGiE14I/%D0%A2%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%BD%D1%8B%D0%B5-%D1%80%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8?type=design&amp;node-id=1218-29036&amp;mode=design&amp;t=0h6UgaTmZnZ4uhJZ-11">Макет</a></mark></td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81b3-b030-e81811bd1f9c" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

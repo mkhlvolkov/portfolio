@@ -1,0 +1,741 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Отправка сообщений</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1287e581-6658-8115-bca5-d112aa183eae" class="page sans"><header><h1 class="page-title" dir="auto"><strong>Отправка сообщений</strong></h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-81ff-a917-e342d282dff2"><div style="font-size:1.5em"><span class="icon">✏️</span></div><div style="width:100%">Новые контакты из триггерных рассылок записываются в базу со “способом загрузки” – API. </div></figure></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.875em;line-height:1.3;margin:0">Параметры </summary><div class="indented"><div style="display:contents" dir="auto"><p id="1287e581-6658-814d-b5d3-f3af97256fde" class="">
+</p></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-816a-8694-d725be0e00c1" class="numbered-list" start="1"><li><strong>TO [string]</strong> (Кому отправить)<div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Ошибки связанные с получателем</strong></summary><div class="indented"><div style="display:contents" dir="ltr"><table id="1287e581-6658-814a-8193-cc4bac05c5e8" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-819f-87e8-ce6b1afe7a67"><td id="KBpJ" class="" style="width:271px"><strong>Код ошибки</strong></td><td id="RHwP" class="" style="width:333px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81dd-84f6-f9b68d2ab79b"><td id="KBpJ" class="" style="width:271px">CHAT_INCORRECT_CHAT_ID_WHATSAPP</td><td id="RHwP" class="" style="width:333px">По этому номеру нет аккаунта в WhatsApp</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8107-b050-c5a73d081e4d"><td id="KBpJ" class="" style="width:271px">PHONE_NUMBER_INCORRECT</td><td id="RHwP" class="" style="width:333px">Некорректный номер получателя. Номер телефона должен быть в международном формате: содержать от 9 до 16 цифр, В номере телефона допустимы дефисы, пробелы, скобки, +7/8.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-812b-b71c-fcaa65232938"><td id="KBpJ" class="" style="width:271px">PARAMETR_TO_NOT_FOUNDED</td><td id="RHwP" class="" style="width:333px">Параметр получателя не найден</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8100-9edd-f843e0b31ed4" class="">
+</p></div></div></details></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81c8-95ec-e19a3bf44d0d" class="">
+</p></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-812b-b608-e75286091150" class="numbered-list" start="2"><li><strong>apiToken</strong> (уникальный ID пользователя, вшитый в URL)<div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Ошибки токена</strong></summary><div class="indented"><div style="display:contents" dir="ltr"><table id="1287e581-6658-815a-a224-f7c188ff2688" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ba-92aa-e7dd3d91e96c"><td id="KBpJ" class="" style="width:271px"><strong>Код ошибки</strong></td><td id="RHwP" class="" style="width:335px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81a2-abf1-cd185bea45b2"><td id="KBpJ" class="" style="width:271px">ACCOUNT_NOT_FOUND</td><td id="RHwP" class="" style="width:335px">Токен акаунта не найден</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81d5-ae2f-d0e7d1d24a1f"><td id="KBpJ" class="" style="width:271px">BALANCE_INCORRECT</td><td id="RHwP" class="" style="width:335px">Превышен лимит сообщений в рамках тарифа, а на балансе нет денег.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81f5-a07f-e9a2347d574d"><td id="KBpJ" class="" style="width:271px">LIMIT_FINISH</td><td id="RHwP" class="" style="width:335px">Кончился тариф </td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="1287e581-6658-818d-8844-e2f0cd34fb10" class="">
+</p></div></div></details></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8103-8232-e1f36ddff65e" class="">
+</p></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-8149-a20a-f5c7d0580f9a" class="numbered-list" start="3"><li><strong>message (</strong>Сообщение (id шаблона + переменные))<div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Ошибки шаблона</strong></summary><div class="indented"><div style="display:contents" dir="ltr"><table id="1287e581-6658-814f-8356-f439cd83bbab" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8127-91c6-e2a0918fc220"><td id="KBpJ" class="" style="width:271px"><strong>Код ошибки</strong></td><td id="RHwP" class="" style="width:334px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-817e-9b60-e821d537208f"><td id="KBpJ" class="" style="width:271px">TEMPLATE_HEADING_TEXT_TOO_LONG</td><td id="RHwP" class="" style="width:334px">Длина заголовка вместе с переменными превышает 60 символов.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81f4-a371-ce2abfdc1b71"><td id="KBpJ" class="" style="width:271px">TEMPLATE_BODY_TEXT_TOO_LONG</td><td id="RHwP" class="" style="width:334px">Длина текстового сообщения вместе с переменными превышает 1 000 символов.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81b0-977e-eae85d65407a"><td id="KBpJ" class="" style="width:271px">TEMPLATE_CAN_NOT_BE_BLANK</td><td id="RHwP" class="" style="width:334px">Есть не заполненные переменные в шаблоне.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8127-bbe8-f37d26b010fa"><td id="KBpJ" class="" style="width:271px">TEMPLATE_NOT_FOUND</td><td id="RHwP" class="" style="width:334px">Шаблон WABA не найден</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8126-9fa4-dee384822a9d"><td id="KBpJ" class="" style="width:271px">TEMPLATE_IS_SPAM</td><td id="RHwP" class="" style="width:334px">Шаблон заблокирован WhatsApp’ом</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-815c-ba6b-f2ea846f5897"><td id="KBpJ" class="" style="width:271px">TEMPLATE_IS_DISABLED</td><td id="RHwP" class="" style="width:334px">Шаблон неактивен (отклонен)</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81a5-a6c1-f7b7db19cabf"><td id="KBpJ" class="" style="width:271px">TEMPLATE_ON_MODERATION</td><td id="RHwP" class="" style="width:334px">Шаблон на модерации</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-815b-b2bf-df1433f67956"><td id="KBpJ" class="" style="width:271px">JSON_ERROR</td><td id="RHwP" class="" style="width:334px">Неправильный формат JSON (битый файл)</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8159-8d60-ce35b2f3088e"><td id="KBpJ" class="" style="width:271px">DIFFERENT_NUMBER_OF_VARIABLES</td><td id="RHwP" class="" style="width:334px">Число переменных передаваемых не соответствует числу переменных в шаблоне</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8128-95bc-e5b16c67338a"><td id="KBpJ" class="" style="width:271px">JSON_VAR_NOT_FOUNDED</td><td id="RHwP" class="" style="width:334px">Одна из переменных пуста</td></tr></div></tbody></table></div></div></details></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Ошибки медиа</strong></summary><div class="indented"><div style="display:contents" dir="ltr"><table id="1287e581-6658-8157-97d8-c5844ffe291a" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-819b-9ae0-e51914ca8d49"><td id="KBpJ" class="" style="width:271px"><strong>Код ошибки</strong></td><td id="RHwP" class="" style="width:372px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81b9-8afa-cb16e7064f8d"><td id="KBpJ" class="" style="width:271px">TEMPLATE_WRONG_CONTENT_TYPE</td><td id="RHwP" class="" style="width:372px">Неверный тип контента. Возникает, если не удалось определить тип контента или он не поддерживается.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-818d-b71a-cfc39ee45d95"><td id="KBpJ" class="" style="width:271px">TEMPLATE_CONTENT_LINK_ERROR</td><td id="RHwP" class="" style="width:372px">Некорректная ссылка на контент</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81e3-b7e3-e48423fc9780"><td id="KBpJ" class="" style="width:271px">TEMPLATE_CONTENT_SIZE_EXCEEDED</td><td id="RHwP" class="" style="width:372px">Контент превышает допустимый размер 10 MB.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8157-9042-fdc49cf0a660"><td id="KBpJ" class="" style="width:271px">TEMPLATE_CONTENT_CAN_NOT_BE_BLANK</td><td id="RHwP" class="" style="width:372px">Файл с контентом не может быть пустым.<br/>Возникает при отправке не текстового сообщения, к которому не приложили ссылку на контент.</td></tr></div></tbody></table></div></div></details></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81b3-bf40-f1535ddb8c0c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8117-ad7e-ca5b4f872426" class="">
+</p></div></li></ol></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81ed-b7db-f1823ce65fd2" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-8190-b0d8-c2f7cef5ce56" class=""><strong>Фичи</strong></h3></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-8159-afea-d7d94ae5cafe" class="numbered-list" start="1"><li>ID чат-бота <div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Ошибки ID чат-бота</strong></summary><div class="indented"><div style="display:contents" dir="ltr"><table id="1287e581-6658-8190-9cbc-d2b9052c6bb0" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8106-8377-d498ee213e4b"><td id="KBpJ" class="" style="width:271px"><strong>Код ошибки</strong></td><td id="RHwP" class="" style="width:324px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-813a-8197-d9d105bba7ce"><td id="KBpJ" class="" style="width:271px">BOT_NOT_FOUND</td><td id="RHwP" class="" style="width:324px">Чат-бот не найден</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8128-83b9-c982150f255e"><td id="KBpJ" class="" style="width:271px">BOT_DISABLED</td><td id="RHwP" class="" style="width:324px">Чат-бот не активен</td></tr></div></tbody></table></div></div></details></div><div style="display:contents" dir="auto"><p id="1287e581-6658-819e-88b4-cf9f4b38cc0e" class="">
+</p></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1287e581-6658-8146-82ee-ff26f04f9fa2" class="numbered-list" start="2"><li><mark class="highlight-red_background">ID канала(?)</mark><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Ошибки ID канала</strong></summary><div class="indented"><div style="display:contents" dir="ltr"><table id="1287e581-6658-8141-920d-d87053bd7b6c" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8108-b165-deb063e4c35a"><td id="KBpJ" class="" style="width:271px"><strong>Код ошибки</strong></td><td id="RHwP" class="" style="width:331px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81e1-b5c6-e8922fd57b2c"><td id="KBpJ" class="" style="width:271px">CHANNEL_NOT_FOUND</td><td id="RHwP" class="" style="width:331px">Канал, через который отправляется сообщение, не найден</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8189-8d53-c163836eea03"><td id="KBpJ" class="" style="width:271px">CHANNEL_BLOCKED</td><td id="RHwP" class="" style="width:331px">Канал, через который отправляется сообщение, выключен.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81e6-bfa8-fea86ed9a575"><td id="KBpJ" class="" style="width:271px">CHANNEL_NO_MONEY</td><td id="RHwP" class="" style="width:331px">Канал не оплачен и имеет статус «Не оплачен».</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81f7-9c8c-d08abd8d76bd"><td id="KBpJ" class="" style="width:271px">MESSAGE_CHANNEL_UNAVAILABLE</td><td id="RHwP" class="" style="width:331px">Канал, с которого отправляется сообщение, недоступен.У канала статус «Модерируется».</td></tr></div></tbody></table></div></div></details></div></li></ol></div><div style="display:contents" dir="auto"><p id="1287e581-6658-810f-9cfa-f080a7f23d56" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8195-8dbb-c876427ed471" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8102-87f8-db5f56eeb774" class="">После отправки сообщения сохраняем контакт в базу</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8122-b997-c99255279cf3" class="">
+</p></div></div></details></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.875em;line-height:1.3;margin:0">Общие ошибки</summary><div class="indented"><div style="display:contents" dir="ltr"><table id="1287e581-6658-817f-90ee-f93a5a214b98" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81a2-99e0-d39392801454"><td id="KBpJ" class="" style="width:271px"><strong>Код ошибки</strong></td><td id="RHwP" class="" style="width:372px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81dd-a0bc-e0137632061d"><td id="KBpJ" class="" style="width:271px">SERVER_ERROR</td><td id="RHwP" class="" style="width:372px">Ошибка сервера</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81d9-8c99-ea6a95b118a8"><td id="KBpJ" class="" style="width:271px">MESSAGES_CAN_NOT_ADD</td><td id="RHwP" class="" style="width:372px">Сообщение не было отправлено. Возникла непредвиденная серверная ошибка.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8102-b806-c4860071b06b"><td id="KBpJ" class="" style="width:271px">UNKNOWN_ERROR</td><td id="RHwP" class="" style="width:372px">Неизвестная ошибка. Обратитесь в поддержку</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8143-9288-c4ce10d56413"><td id="KBpJ" class="" style="width:271px">TIME_OUT_ERROR</td><td id="RHwP" class="" style="width:372px">Превышен лимит ожидания ответа от сервера.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-812f-a79f-e3f4b4dcd2e4"><td id="KBpJ" class="" style="width:271px">URL_DISABLED_ERROR</td><td id="RHwP" class="" style="width:372px">Неактивный/деактивированный URL</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8109-bc69-e3f9a21ff64e"><td id="KBpJ" class="" style="width:271px">URL_ERROR</td><td id="RHwP" class="" style="width:372px">Неверный URL</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8173-8851-c679dd692181" class="">
+</p></div></div></details></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.875em;line-height:1.3;margin:0">Пример из Wazzup</summary><div class="indented"><div style="display:contents" dir="auto"><p id="1287e581-6658-8168-9f16-d5476258cf9f" class="">Для отправки сообщений необходимо вызвать</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8148-b27d-ce156fd7bee4" class=""><code>POST https://api.wazzup24.com/v3/message</code></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81e1-8aa2-e83226e223fe" class="">В теле следует передавать параметры сообщения с указанием <a href="https://docs.google.com/document/d/18k33EDizK9a9KldCih9uWbBcVyJGrskC2PCkywvD7Sg/edit#heading=h.1mr1ixrekl1z">данных авторизации</a><br/> в заголовке.</p></div><div style="display:contents" dir="auto"><h2 id="1287e581-6658-8134-8932-c6f05a6829c1" class=""><strong>Параметры запроса</strong></h2></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8184-8036-e46e660f9828" class="">Роут не идемпотентен! Повторные запросы с одним и тем же содержимым приведут к отправке нескольких одинаковых сообщений. Для защиты от возможного дублирования сообщений можно добавлять уникальное для сообщения свойство <strong>crmMessageId</strong>. Если оно было отправлено, то при поступлении другого запроса с этим же crmMessageId, сообщение не отправится, вернётся ошибка<em> 400 Bad Request, { error: &#x27;repeatedCrmMessageId&#x27;, description: &#x27;You have already sent message with same crmMessageId&#x27; }</em>.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-811a-91dd-fbe0e013c9d2" class="">Важно! Для отправки шаблонов WABA в поле “text” необходимо передавать “код шаблона”, который можно получить в поддержке. Если в шаблоне есть переменные, то в момент отправки следует заменять их нужными значениями. Подробней о том, как добавить шаблон и о примерах использования, можно прочитать в <a href="https://wazzup24.ru/help/how-to-configurate/how-to-add-a-waba-template/">статье</a>.</p></div><div style="display:contents" dir="auto"><h2 id="1287e581-6658-8197-a3a8-c491c18520a0" class=""><strong>Пример запроса</strong></h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-8139-bb5c-f288cecf55f4" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"> curl --location --request POST &#x27;https://api.wazzup24.com/v3/message&#x27; \
+--header &#x27;Authorization: Bearer c8cf90444023482f909520d454368d27&#x27; \
+--header &#x27;Content-Type: application/json&#x27; \
+--data-raw &#x27;{
+&quot;channelId&quot;: &quot;3376e1c3-26a6-478b-b964-72bf01cc22cb&quot;,
+&quot;chatType&quot;: &quot;whatsapp&quot;,
+&quot;chatId&quot;: &quot;79998887766&quot;,
+&quot;contentUri&quot;: &quot;https://example.com/images/img_01.png&quot;
+}
+&#x27;</code></pre></div><div style="display:contents" dir="auto"><h2 id="1287e581-6658-81f9-a1c3-fb595a23b10e" class=""><strong>Ответ</strong></h2></div><div style="display:contents" dir="auto"><h2 id="1287e581-6658-8127-8c52-e221f57bff56" class=""><strong>Пример ответа</strong></h2></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8126-9a17-de1ba43629a3" class=""><strong>HTTP/1.1 201 OK</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-8182-88d9-cf6f025dc7cf" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">HTTP/1.1 200 OK
+{
+&quot;messageId&quot;: &quot;e0629e11-0f67-4567-92a9-2237e91ec1b9&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0"><del><strong>Ошибки при отправке сообщений (wazzup)</strong></del></summary><div class="indented"><div style="display:contents" dir="ltr"><table id="1287e581-6658-8142-9576-f3bbc07f11a0" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ba-a9df-f085a879da03"><td id="iK|W" class="" style="width:270px"><strong>Код ошибки</strong></td><td id="ppAG" class="" style="width:449px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-810e-b7f3-cd9cb18382e1"><td id="iK|W" class="" style="width:270px">MESSAGE_WRONG_CONTENT_TYPE</td><td id="ppAG" class="" style="width:449px">Неверный тип контента. Возникает, если не удалось определить тип контента или он не поддерживается.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8159-9608-fe32f1299048"><td id="iK|W" class="" style="width:270px">MESSAGE_ONLY_TEXT_OR_CONTENT</td><td id="ppAG" class="" style="width:449px">В сообщении может быть текст или контент. Отправлять одновременно текст и контент в WhatsApp нельзя.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-811f-8a9e-e9963df0f197"><td id="iK|W" class="" style="width:270px">MESSAGE_NOTHING_TO_SEND</td><td id="ppAG" class="" style="width:449px">Текст сообщения не найден.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8163-a973-f7fa171a98c5"><td id="iK|W" class="" style="width:270px">MESSAGE_TEXT_TOO_LONG</td><td id="ppAG" class="" style="width:449px">Длина текстового сообщения превышает 10 000 символов.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8167-8d61-eab9e91b780c"><td id="iK|W" class="" style="width:270px">MESSAGE_CONTENT_CAN_NOT_BE_BLANK</td><td id="ppAG" class="" style="width:449px">Файл с контентом не может быть пустым.<br/>Возникает при отправке нетекстового сообщения, к которому не приложили контент.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81a8-8f04-eec80854c08a"><td id="iK|W" class="" style="width:270px">MESSAGE_CONTENT_SIZE_EXCEEDED</td><td id="ppAG" class="" style="width:449px">Контент превышает допустимый размер 10 MB.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8133-ba4b-f09919915896"><td id="iK|W" class="" style="width:270px">MESSAGE_TEXT_CAN_NOT_BE_BLANK</td><td id="ppAG" class="" style="width:449px">Текстовое сообщение не может быть пустым.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ed-b6f4-d33150d5a967"><td id="iK|W" class="" style="width:270px">CHANNEL_NOT_FOUND</td><td id="ppAG" class="" style="width:449px">Канал, через который отправляется сообщение, не найден в интеграции.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8193-b7a4-e6eac5db8f8f"><td id="iK|W" class="" style="width:270px">CHANNEL_BLOCKED</td><td id="ppAG" class="" style="width:449px">Канал, через который отправляется сообщение, выключен.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-819a-9f03-c7ec1c196129"><td id="iK|W" class="" style="width:270px">MESSAGES_NOT_TEXT_FIRST</td><td id="ppAG" class="" style="width:449px"><a href="https://wazzup24.ru/help/price-plans-ru/#%D0%A2%D0%B0%D1%80%D0%B8%D1%84_Start">На тарифе «Старт»</a><br/> нельзя написать первым.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8131-8f6e-dd420b4b0083"><td id="iK|W" class="" style="width:270px">MESSAGES_IS_SPAM</td><td id="ppAG" class="" style="width:449px">Wazzup оценил это сообщение, как <a href="https://wazzup24.ru/help/bans-in-whatsapp-ru/#%D0%A0%D0%B0%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B0_%D1%81%D0%BF%D0%B0%D0%BC%D0%B0">спам</a>.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ab-a367-e8b547e86da9"><td id="iK|W" class="" style="width:270px">CHAT_WRONG_CHAT_TYPE</td><td id="ppAG" class="" style="width:449px">Неверный тип чата.<br/>Возникает в случае, если вы отправляете исходящее сообщение в мессенджер, не входящий в список [INSTAGRAM, WHATSAPP, VK, TELEGRAM].</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8127-866d-cb958576fd0b"><td id="iK|W" class="" style="width:270px">CHAT_MISSING_CHAT_TYPE</td><td id="ppAG" class="" style="width:449px">chatType не передан.<br/>Выберете тип чата из списка [INSTAGRAM, WHATSAPP, VK, TELEGRAM].</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-816e-b02f-fbe7b73a11ce"><td id="iK|W" class="" style="width:270px">CHAT_INCORRECT_CHAT_ID_WHATSAPP</td><td id="ppAG" class="" style="width:449px">Некорректный номер WhatsApp.Номер телефона должен быть в международном формате: содержать от 9 до 16 цифр, для российских номеров начинаться с 7.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81d0-b3c0-c091b66080df"><td id="iK|W" class="" style="width:270px">CHAT_MISSING_CHAT_ID</td><td id="ppAG" class="" style="width:449px">chatId не передан.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81da-b570-c9cb714353c7"><td id="iK|W" class="" style="width:270px">VALIDATION_ERROR</td><td id="ppAG" class="" style="width:449px">Валидационная ошибка параметра, переданного в запрос.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-818f-b096-fa22a70e8bff"><td id="iK|W" class="" style="width:270px">ACCOUNT_NOT_FOUND</td><td id="ppAG" class="" style="width:449px">Аккаунт не найден в интеграции.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81d8-aa80-f059559a99ee"><td id="iK|W" class="" style="width:270px">CONTACT_NOT_FOUND</td><td id="ppAG" class="" style="width:449px">Контакт не найден среди контактов аккаунта — чат с таким номером телефона отсутствует.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-816c-8c4d-cfd4c7f1564d"><td id="iK|W" class="" style="width:270px">CHANNEL_NO_MONEY</td><td id="ppAG" class="" style="width:449px">Канал не оплачен и имеет статус «Не оплачен».</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8164-a0da-cb5cd8c3903c"><td id="iK|W" class="" style="width:270px">MESSAGE_CHANNEL_UNAVAILABLE</td><td id="ppAG" class="" style="width:449px">Канал, с которого отправляется сообщение, недоступен.У канала статус «Телефон недоступен» или «Подождите минутку».</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81b4-abcd-d491cd06a6c5"><td id="iK|W" class="" style="width:270px">CONTACT_DETAIL_NOT_FOUND</td><td id="ppAG" class="" style="width:449px">Информация о контакте отсутствует.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-812f-8a65-e897f26060ac"><td id="iK|W" class="" style="width:270px">MESSAGES_ABNORMAL_SEND</td><td id="ppAG" class="" style="width:449px">Тип чата не соответствует источнику контакта.Например, такая ошибка может возникнуть, если вы пытаетесь отправить сообщение с канала WhatsApp на канал Instagram.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ce-b4db-fb4b423cab8e"><td id="iK|W" class="" style="width:270px">MESSAGES_INVALID_CONTACT_TYPE</td><td id="ppAG" class="" style="width:449px">Тип чата не соответствует источнику контакта Instagram.Например, такая ошибка может возникнуть, если вы пытаетесь отправить сообщение с канала Instagram на канал WhatsApp.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8184-9b5d-cc163f59f33c"><td id="iK|W" class="" style="width:270px">MESSAGES_CAN_NOT_ADD</td><td id="ppAG" class="" style="width:449px">Сообщение не было отправлено. Возникла непредвиденная серверная ошибка.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ee-9ca3-e61e61e02fd5"><td id="iK|W" class="" style="width:270px">UNKNOWN_ERROR</td><td id="ppAG" class="" style="width:449px">Неизвестная ошибка.Обратитесь в поддержку</td></tr></div></tbody></table></div></div></details></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8157-9217-cbe691923b95" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81c3-95a5-fdb98a4bffd0" class="">
+</p></div></div></details></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8156-8a93-c1a520d10890" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
