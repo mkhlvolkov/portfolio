@@ -1,0 +1,715 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Скрипт продажи через кастдев по конкурентам</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1287e581-6658-8053-82d0-f86d13c2aac4" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🔵</span></div><h1 class="page-title" dir="auto">Скрипт продажи через кастдев по конкурентам</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h2 id="1c905c62-1400-4d5a-8447-67d67e048926" class="">Сценарий кастдева по сrm-маркетингу: </h2></div><div style="display:contents" dir="auto"><p id="2ee49ece-2742-4b4b-8fc3-6391e30275b4" class=""><strong>Цель - продать WA маркетинг</strong></p></div><div style="display:contents" dir="auto"><p id="e4c43945-cc2e-4e46-ba71-6f7da82e52e0" class="">Добрый день, мы с командой создаем агентство crm маркетинга. </p></div><div style="display:contents" dir="auto"><p id="a0604eed-a537-43ee-8b4f-0747cbcc2850" class="">Из истории - мы эксперты в мессенджер маркетинге. У нас есть свой продукт - сервис рассылок и ботов WA, помогаем массовые коммуникации с клиентом WA (как агентство). </p></div><div style="display:contents" dir="auto"><p id="46e14c29-27b0-4b9d-b2a8-bbed68210e1c" class="">Но мы часто стали получать запросы от (ОТРАСЛЬ) на комплексную работу с базами (не только коммуникации). </p></div><div style="display:contents" dir="auto"><p id="4af56c42-dca5-4c9c-aa08-586c9b1ad702" class="">Именно поэтому, хочу понять какие есть боли у (ОТРАСЛЬ), какие есть задачи по СRM маркетингу.</p></div><div style="display:contents" dir="auto"><p id="68e2c66d-c28e-4561-bb70-6d0fa7ac3037" class=""> Провожу исследование. Удобно ответить на несколько вопросов</p></div><div style="display:contents" dir="auto"><ol type="1" id="bdddf465-faaa-4a28-89ba-c57fbeadf104" class="numbered-list" start="1"><li>Какая у вас Роль в компании? За что отвечаете? </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="f2367a93-8047-4e72-86fc-9ab31d36004e" class="numbered-list" start="2"><li>Перечислите пожалуйста ваши типичные действия, которые вы выполняете в процессе работы на CRM-маркетингом [получаем список рутинных действий]</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3d126c37-b03c-480e-bc74-b7cc028db186" class="numbered-list" start="3"><li>За какие продукты/услуги вы платите? Расскажите как вы их используете? [получаем список софта и\или подрядчиков] </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="752b002d-1cc8-4eb6-ba85-22a84e65e03c" class="numbered-list" start="4"><li> Касаемо работы с CRM-маркетинга, расскажите пожалуйста в деталях про каждое действие + потом про каждый софт\услугу\подрядчика как их используете:<div style="display:contents" dir="auto"><ol type="a" id="f195a63b-cc86-48d4-a878-d80085761bad" class="numbered-list" start="1"><li> — что делаете? — в каком контексте?</li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="069d9395-1a72-4096-9647-f746f27af5be" class="numbered-list" start="2"><li> — какой результат ждете от действия? </li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="861b84fc-27a4-433f-991b-1967edf0c7aa" class="numbered-list" start="3"><li>— как часто вы делаете это в неделю/месяц? </li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="bed01232-dbf0-4d87-b0b4-1cf724204bc1" class="numbered-list" start="4"><li>— насколько задача важная и имеет влияние на результат OKR, KPI?</li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="8ea24bb7-0f10-440a-be6e-0c3e83688d8d" class="numbered-list" start="5"><li> — можете ли вы сказать, что у вас есть проблемы с текущим решением? Если да—расскажите, с какими проблемами вы регулярно сталкиваетесь</li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="92c26373-472b-496a-a868-a927c0a9917d" class="numbered-list" start="6"><li>— насколько по 10-балльной шкале вы удовлетворены текущим решением, где 10—идеально подходит, а 1—совсем не подходит. Что должно произойти, чтобы &quot;докрутить&quot; решение до 10-бальной шкалы?</li></ol></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1c46d9aa-7a84-4e96-9183-c9402c59c382" class="numbered-list" start="5"><li>сколько вы платите за это решение за софт и\или за подрядчика? Насколько по 10-балльной шкале цена соответствует ценности? </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="ed24d2c2-1782-420c-8f4b-ed547a4fbaa3" class="numbered-list" start="6"><li>KPI: Какие сегменты используете при регулярных коммуникациях?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="80ff31c8-24c3-4da9-b8e9-0f8ced2c2d8b" class="numbered-list" start="7"><li>Сколько работает триггеров и какие?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="8e146fd2-0329-4798-9d58-bb73f82df02a" class="numbered-list" start="8"><li>Сколько коммуникаций отправляете в месяц на 1 пользователя? </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="c2f24a7e-f831-45b0-8169-2337465f2ede" class="numbered-list" start="9"><li>Выручка на 1 подписчика в месяц? </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="55e19a5e-7efb-40bc-b4bc-753171eb9298" class="numbered-list" start="10"><li>Какие дополнительные каналы используются на каких платформах отправляются </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="4ede5869-b979-4a51-b41e-3c2dcc0d5e2b" class="numbered-list" start="11"><li>Какие дополнительные каналы хотите использовать? </li></ol></div><div style="display:contents" dir="auto"><p id="2b14cccd-5a31-4b36-8785-a13428467a56" class=""><strong>Продажа (короткая презентация оффера) </strong></p></div><div style="display:contents" dir="auto"><p id="5e18c91d-f3bd-4283-9e5c-d91801eb23dd" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="b6548c3e-40b9-4d10-9181-be9f43c6ee3d" class="">Сценарий кастдева по смсщикам</h2></div><div style="display:contents" dir="auto"><p id="9525f18c-084d-46b4-a35e-4f95b70ab93a" class="">Добрый день, я партнер Unisender, провожу исследование. Удобно ответить на несколько вопросов?</p></div><div style="display:contents" dir="auto"><p id="7abcd318-3c60-4f94-9d1c-f36d4c7088c8" class=""><strong>Про текущие рассылки</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="310b82d4-53e4-418f-83d2-a4e659435f5c" class="numbered-list" start="1"><li>Какие задачи решаете с помощью рассылок?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="0aa23a26-c795-4c2a-90c2-566abc0d2149" class="numbered-list" start="2"><li>Какие показатели важны при работе с рассылками?<div style="display:contents" dir="auto"><ol type="a" id="2c7b7dc0-9451-465e-93b0-109fbb749e1e" class="numbered-list" start="1"><li>Какие проблемы возникают с рассылками?</li></ol></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="f30fd395-7731-46f2-823f-4dddbd10842d" class="numbered-list" start="3"><li>Как пробовали влиять на эти показатели?</li></ol></div><div style="display:contents" dir="auto"><p id="2377e7cb-02a1-48c0-bef3-d957c8281bf7" class=""><strong>Про триггерные</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="a14eada5-229f-455c-b522-f01b7ff6bd6c" class="numbered-list" start="1"><li>Делали ли триггерные рассылки (по сменам статусов, по событиям)</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1efc6bab-59fa-4fc2-b342-9335e9bf136f" class="numbered-list" start="2"><li>Чем закончилось?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="74c9eed0-e8fb-42ee-8676-023ea90c8f42" class="numbered-list" start="3"><li>Чем сейчас заменяете?</li></ol></div><div style="display:contents" dir="auto"><p id="4a8737e3-c3bd-484b-8815-a6829ac64620" class=""><strong>Про каналы</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="be2397f7-87aa-4918-a36e-96ac6dd1dc89" class="numbered-list" start="1"><li>В каких каналах работаете?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="b57e7076-631e-4fea-bd46-35d33c352bcc" class="numbered-list" start="2"><li>Пробовали ли другие каналы?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="189b3f1e-6b2e-4bb2-8ddd-b73e68644cf8" class="numbered-list" start="3"><li>Какие бы хотели попробовать?</li></ol></div><div style="display:contents" dir="auto"><p id="3251e0e9-6d0d-4d28-ad32-55b92746ccb9" class=""><strong>Продажа (короткая презентация оффера) </strong></p></div><div style="display:contents" dir="auto"><p id="56b628d9-75ca-426b-aa99-ffcbda0f829d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="a2278754-9b21-48e2-829b-2ea5983f308f" class=""><strong>Скрипт продажи через кастдев он-лайн сервисы: </strong></p></div><div style="display:contents" dir="auto"><p id="e16eb6eb-ab9c-41f2-b929-aeb1d0a0d8a9" class="">Добрый день!</p></div><div style="display:contents" dir="auto"><p id="d8d30d79-c305-47b8-a63e-d5cd93f42951" class="">Анастасия, агентство Sender.Profeat.</p></div><div style="display:contents" dir="auto"><p id="ee4e2aa9-246f-46b9-b335-5225279bfc25" class="">(ИМЯ) Вас порекомендовали, так как отвечаете за вопросы маркетинга, это так?</p></div><div style="display:contents" dir="auto"><ul id="6186760f-31b4-4438-ba77-df0ce432bdff" class="bulleted-list"><li style="list-style-type:disc">ДА</li></ul></div><div style="display:contents" dir="auto"><p id="15416e69-f25e-4f5b-84b0-8f00ce0be2d7" class="">Я развиваю продукт, который помогает он-лайн сервисам привлекать, удерживать клиентов через мессенджеры.</p></div><div style="display:contents" dir="auto"><p id="ac1c07e2-77da-4510-bf75-1f6482370d55" class="">(ИМЯ), ваша компания является лидером (выбрать индустрию, куда звоним)</p></div><div style="display:contents" dir="auto"><p id="c68b2916-3008-42c6-8105-b750a070b8b8" class="">Провожу небольшое исследование cреди (выбрать индустрию, куда звоним)</p></div><div style="display:contents" dir="auto"><p id="5c4aeddb-ab04-4919-bfae-c51a07841426" class="">Есть 2 минуты, ответить на 5 вопросов?</p></div><div style="display:contents" dir="auto"><p id="4880946f-7c65-4c0d-9ab5-52de2099190f" class=""><strong>Про базу: </strong></p></div><div style="display:contents" dir="auto"><p id="cddaad48-80a4-4702-9a69-4b5544568613" class=""><strong>Как работаете с базой? </strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="64b58f84-c40e-44dd-84bc-99a6ed517aed" class="numbered-list" start="1"><li>База сегментирована по продукту?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="defcda7b-a463-4269-b275-7753c681f387" class="numbered-list" start="2"><li>База сегментирована по клиенту (маленькие, средние, большие)?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="eca463ff-090e-4274-9a10-1f02516cee67" class="numbered-list" start="3"><li>Различаются ли механики работы менеджера продаж с клиентом, если да, то как? </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2ad233d9-fd2e-463c-a323-936d1b07a158" class="numbered-list" start="4"><li>Какие показатели важны при работе с базой? </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1f60ee54-08d1-4c8d-ad2b-4de4ce0362f5" class="numbered-list" start="5"><li>Как пробовали ли влиять на эти показатели?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="c32f9dd0-0947-4d9a-b00a-dd4ba5d86bdf" class="numbered-list" start="6"><li>Вспомните, какие проблемы встречали при работе с базой (нехватка времени менеджеров на работу с обработкой лидов, квалификацией, и тд?)</li></ol></div><div style="display:contents" dir="auto"><p id="dce92e78-c192-44d1-a5f9-15469c9e442b" class=""><strong>Про каналы</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="42464b90-fbf8-47d1-be7c-94d9c555920a" class="numbered-list" start="1"><li>В каких каналах работаете? </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="8a7f40a5-644e-4311-bb4c-bf7e2eb80f91" class="numbered-list" start="2"><li>Пробовали ли другие каналы?</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="5fb0fc49-9acd-4fae-9c2d-e623249e42e3" class="numbered-list" start="3"><li>Какие бы хотели попробовать?</li></ol></div><div style="display:contents" dir="auto"><p id="e8d5e4da-bc1c-477e-a056-29c2591af304" class=""><strong>Про инструменты: </strong></p></div><div style="display:contents" dir="auto"><p id="90027829-c326-43a2-ad3d-07d03589801f" class=""><strong>Какие инструменты используете для увеличения конверсий на различных этапах воронки?</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="88950327-d038-4224-984c-b03c49dbb859" class="numbered-list" start="1"><li>на этапе первой покупки с новой заявки в лида? </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="20cab220-4b42-42ed-aeed-f44d90b1317a" class="numbered-list" start="2"><li>на этапе второй покупки, чтобы увеличить  LTV - лояльность, допродавать? </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="c14c6e90-8834-4940-96c3-02a898599284" class="numbered-list" start="3"><li>на этапе работы с CHURN rate - c возвратом клиентов? </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="d9ebd1b2-e25b-4cdb-9d06-f5b98dcde67e" class="numbered-list" start="4"><li>Какие инструменты используете, как повышаете клиентский сервис, увеличиваете NPS? Мб, делаете опросы среди текущей базы? </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="6c0151fa-ff41-4417-aee7-0c9b48be97ee" class="numbered-list" start="5"><li>Вспомните, какие вызовы решали по повышению конверсий, какие инструменты это были? Каких результатов удалось достичь?</li></ol></div><div style="display:contents" dir="auto"><p id="a47e9ee3-6d9e-4fc9-8bc6-a8d3f5c13fec" class=""><strong>Продажа (короткая презентация оффера) </strong></p></div><div style="display:contents" dir="auto"><p id="e4d55dc0-9478-450b-9fed-14f7877d96a1" class="">Порекомендуйте, кому из коллег может быть интересно взаимодействовать c клиентом в WA?</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

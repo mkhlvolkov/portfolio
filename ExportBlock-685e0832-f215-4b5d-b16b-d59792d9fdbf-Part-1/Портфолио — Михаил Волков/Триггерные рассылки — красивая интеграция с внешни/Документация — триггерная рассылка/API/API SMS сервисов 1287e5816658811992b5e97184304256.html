@@ -1,0 +1,1086 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>API SMS сервисов </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1287e581-6658-8119-92b5-e97184304256" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">⚔️</span></div><h1 class="page-title" dir="auto">API SMS сервисов </h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="ltr"><table id="1287e581-6658-8162-8629-da42c0174180" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8104-970a-e31b68ff5fac"><td id="rmpX" class="" style="width:120.921875px"><strong>сервис SMS</strong></td><td id="O:Od" class="" style="width:88.9375px"><strong>Посетители в мес</strong></td><td id="t==f" class="" style="width:72.140625px"><strong>Доля людей из РФ </strong></td><td id="lov;" class="" style="width:101.140625px"><strong>Посетители в мес РФ</strong></td><td id="UJBF" class="" style="width:72.140625px"><strong>Число языков</strong></td><td id="GK&gt;|" class="" style="width:130.140625px"><strong>Соц. сети на русском языке (VK, FB)</strong></td><td id="&gt;kDp" class="" style="width:109.140625px"><strong>Соц. сети на английском языке (FB)</strong></td><td id="tCmY" class="" style="width:126.140625px"><strong>Коммент</strong></td><td id="Kh[;" class="" style="width:49px"><strong>GET</strong></td><td id="CP~q" class="" style="width:65px"><mark class="highlight-teal_background"><strong>POST</strong></mark></td><td id="u[=S" class=""><strong>Контейнер (JSON, XML) </strong></td><td id="Zbop" class=""><strong>Один или несколько абонентов в запросе</strong></td><td id="Wtds" class="" style="width:340px"><strong>Какие переменные обязательны</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8164-98e2-db8f60a78cbb"><td id="rmpX" class="" style="width:120.921875px"><a href="https://sendsay.ru/">sendsay.ru</a></td><td id="O:Od" class="" style="width:88.9375px">5,5 млн</td><td id="t==f" class="" style="width:72.140625px">90%</td><td id="lov;" class="" style="width:101.140625px">4 950 000</td><td id="UJBF" class="" style="width:72.140625px">2</td><td id="GK&gt;|" class="" style="width:130.140625px">2 674</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">type, sms, to</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-812c-97dd-c4d7ac0b51c8"><td id="rmpX" class="" style="width:120.921875px">sendpulse.com</td><td id="O:Od" class="" style="width:88.9375px">7,5 млн</td><td id="t==f" class="" style="width:72.140625px">26%</td><td id="lov;" class="" style="width:101.140625px">1 950 000</td><td id="UJBF" class="" style="width:72.140625px">7 </td><td id="GK&gt;|" class="" style="width:130.140625px">Телеграмм 5 244</td><td id="&gt;kDp" class="" style="width:109.140625px">4 500</td><td id="tCmY" class="" style="width:126.140625px">не работает больше в РФ</td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">sender, phones, body, transliterate</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8169-982e-e276b0cec751"><td id="rmpX" class="" style="width:120.921875px"><a href="https://www.unisender.com/">unisender.com</a></td><td id="O:Od" class="" style="width:88.9375px">1,4 млн</td><td id="t==f" class="" style="width:72.140625px">59%</td><td id="lov;" class="" style="width:101.140625px">826 000</td><td id="UJBF" class="" style="width:72.140625px">1 (рус) </td><td id="GK&gt;|" class="" style="width:130.140625px">30 498</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">V</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">api_key, sender, body, list_id, </td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81c5-af0a-e81882852b22"><td id="rmpX" class="" style="width:120.921875px">smsc.ru</td><td id="O:Od" class="" style="width:88.9375px">396 000</td><td id="t==f" class="" style="width:72.140625px">85%</td><td id="lov;" class="" style="width:101.140625px">336 600</td><td id="UJBF" class="" style="width:72.140625px">4</td><td id="GK&gt;|" class="" style="width:130.140625px">238+103</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">V</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">login, psw, phones, mes</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8126-a8cd-e837f9e8e82d"><td id="rmpX" class="" style="width:120.921875px"><a href="https://mailchimp.com/">mailchimp</a></td><td id="O:Od" class="" style="width:88.9375px">15 млн</td><td id="t==f" class="" style="width:72.140625px">&lt;1%</td><td id="lov;" class="" style="width:101.140625px">&lt;150 000</td><td id="UJBF" class="" style="width:72.140625px">6 (нет рус)</td><td id="GK&gt;|" class="" style="width:130.140625px">-</td><td id="&gt;kDp" class="" style="width:109.140625px">496 548</td><td id="tCmY" class="" style="width:126.140625px">только email</td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">key, message, async, ip_pool, send_at</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81b7-a125-e4211fe8d196"><td id="rmpX" class="" style="width:120.921875px">sms.ru</td><td id="O:Od" class="" style="width:88.9375px">175 000</td><td id="t==f" class="" style="width:72.140625px">79%</td><td id="lov;" class="" style="width:101.140625px">138 250</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">-</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">V</td><td id="CP~q" class="" style="width:65px">-</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">to, msg, api_id (или login+password)</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81f3-a800-ffd823a06852"><td id="rmpX" class="" style="width:120.921875px"><a href="https://sms-activation-service.com/">sms-activation-service.com/</a></td><td id="O:Od" class="" style="width:88.9375px">640 000</td><td id="t==f" class="" style="width:72.140625px">21%</td><td id="lov;" class="" style="width:101.140625px">134 400</td><td id="UJBF" class="" style="width:72.140625px">17 </td><td id="GK&gt;|" class="" style="width:130.140625px">523</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px">только прием смс</td><td id="Kh[;" class="" style="width:49px"></td><td id="CP~q" class="" style="width:65px"></td><td id="u[=S" class=""></td><td id="Zbop" class=""></td><td id="Wtds" class="" style="width:340px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8128-8857-cb2caafb3acd"><td id="rmpX" class="" style="width:120.921875px"><a href="https://www.twilio.com/">twilio.com</a></td><td id="O:Od" class="" style="width:88.9375px">3,9 млн</td><td id="t==f" class="" style="width:72.140625px">&lt;1%</td><td id="lov;" class="" style="width:101.140625px">&lt;39 000</td><td id="UJBF" class="" style="width:72.140625px">6 (нет рус)</td><td id="GK&gt;|" class="" style="width:130.140625px">-</td><td id="&gt;kDp" class="" style="width:109.140625px">64 146</td><td id="tCmY" class="" style="width:126.140625px">нет рус. версии, есть отправка в whatsApp</td><td id="Kh[;" class="" style="width:49px"></td><td id="CP~q" class="" style="width:65px"></td><td id="u[=S" class=""></td><td id="Zbop" class=""></td><td id="Wtds" class="" style="width:340px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8182-b814-d3dc2a0855a7"><td id="rmpX" class="" style="width:120.921875px"><a href="https://smsaero.ru/">smsaero.ru</a></td><td id="O:Od" class="" style="width:88.9375px">47 100</td><td id="t==f" class="" style="width:72.140625px">78%</td><td id="lov;" class="" style="width:101.140625px">36 738</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">257</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON, XML</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">number(numbers), sign, text</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81a7-86b1-caa5aab129e8"><td id="rmpX" class="" style="width:120.921875px"><a href="https://stream-telecom.ru/">stream-telecom.ru</a></td><td id="O:Od" class="" style="width:88.9375px">44 600</td><td id="t==f" class="" style="width:72.140625px">81%</td><td id="lov;" class="" style="width:101.140625px">36 126</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">254</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">V</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">login, pass, sourceAddress, destinationAddresses, data</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81a2-a1a0-db80ff547ad0"><td id="rmpX" class="" style="width:120.921875px"><a href="https://notisend.ru/">notisend.ru</a></td><td id="O:Od" class="" style="width:88.9375px">26 200</td><td id="t==f" class="" style="width:72.140625px">87%</td><td id="lov;" class="" style="width:101.140625px">22 794</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">193</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">V</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">project, icnlude, message, sign, </td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-812f-bc1d-cae5301b0a9b"><td id="rmpX" class="" style="width:120.921875px"><a href="https://edna.ru/">edna.ru</a></td><td id="O:Od" class="" style="width:88.9375px">23 000</td><td id="t==f" class="" style="width:72.140625px">97%</td><td id="lov;" class="" style="width:101.140625px">22 310</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">-</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">requestId, cascadeID, subscriberFilter, address, type, phone, content</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ef-9446-fb1a7cf9f630"><td id="rmpX" class="" style="width:120.921875px">epochta.ru</td><td id="O:Od" class="" style="width:88.9375px">25 000</td><td id="t==f" class="" style="width:72.140625px">63%</td><td id="lov;" class="" style="width:101.140625px">15 750</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">52+1600</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">XML</td><td id="Zbop" class="">На один</td><td id="Wtds" class="" style="width:340px">operation, username, password, sender, text, messageID</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8156-9de8-fbe2a0039f0b"><td id="rmpX" class="" style="width:120.921875px"><a href="https://p1sms.ru/">p1sms.ru</a></td><td id="O:Od" class="" style="width:88.9375px">15 500</td><td id="t==f" class="" style="width:72.140625px">100%</td><td id="lov;" class="" style="width:101.140625px">15 500</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">31</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">apiKey, sms, sms.*.phone, sms.*.channel, sms.*.sender, sms.*.viberParameters, sms.<em>.viberParameters.</em>.type</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-812b-a3fb-e7ea1344ebb3"><td id="rmpX" class="" style="width:120.921875px"><a href="https://targetsms.ru/">targetsms.ru</a></td><td id="O:Od" class="" style="width:88.9375px">20 100</td><td id="t==f" class="" style="width:72.140625px">77%</td><td id="lov;" class="" style="width:101.140625px">15 477</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">-</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">V</td><td id="CP~q" class="" style="width:65px">-</td><td id="u[=S" class="">XML</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">user, pwd, name_delivery, sadr, text, dadr</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81f7-9239-f53b2df124b5"><td id="rmpX" class="" style="width:120.921875px"><a href="https://www.smsprofi.ru/">smsprofi.ru</a></td><td id="O:Od" class="" style="width:88.9375px">16 100</td><td id="t==f" class="" style="width:72.140625px">76%</td><td id="lov;" class="" style="width:101.140625px">12 236</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">792</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">XML</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">login, password, to, action</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81f5-9c42-f0e0ba04a39f"><td id="rmpX" class="" style="width:120.921875px"><strong><a href="https://sigmasms.ru/">sigmasms.ru</a></strong></td><td id="O:Od" class="" style="width:88.9375px">16 500</td><td id="t==f" class="" style="width:72.140625px">62%</td><td id="lov;" class="" style="width:101.140625px">10 230</td><td id="UJBF" class="" style="width:72.140625px">3</td><td id="GK&gt;|" class="" style="width:130.140625px">554</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON, XML</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">recipient, type, payload, fallbacks, schedule</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8179-8e4c-d43832473168"><td id="rmpX" class="" style="width:120.921875px"><a href="https://smsgorod.ru/">smsgorod.ru</a></td><td id="O:Od" class="" style="width:88.9375px">11 300</td><td id="t==f" class="" style="width:72.140625px">87%</td><td id="lov;" class="" style="width:101.140625px">9 831</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">1126</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px">есть еще отправка в vk, viber,</td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">apiKey, sms, sms.*.phone, sms.*.channel, </td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-811e-88ba-ff248cb87389"><td id="rmpX" class="" style="width:120.921875px"><a href="https://www.infobip.com">infobip.com</a></td><td id="O:Od" class="" style="width:88.9375px">957 000</td><td id="t==f" class="" style="width:72.140625px">&lt;1%</td><td id="lov;" class="" style="width:101.140625px">9 570</td><td id="UJBF" class="" style="width:72.140625px">7 </td><td id="GK&gt;|" class="" style="width:130.140625px">-</td><td id="&gt;kDp" class="" style="width:109.140625px">52 145</td><td id="tCmY" class="" style="width:126.140625px">есть рус. версия, но она не работает. есть отправка в whatsApp. Параметры указаны для whatsApp. </td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">from, to, content, templateName, templateData, placeholders,type, array, language</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81b2-a7c0-f023b60c6597"><td id="rmpX" class="" style="width:120.921875px"><strong><a href="http://iqsms.ru">iqsms.ru</a></strong></td><td id="O:Od" class="" style="width:88.9375px">10 000</td><td id="t==f" class="" style="width:72.140625px">89%</td><td id="lov;" class="" style="width:101.140625px">8 900</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">-</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">login, password, clientid, phone, text</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81f5-9aca-c67d8c262b1d"><td id="rmpX" class="" style="width:120.921875px"><a href="https://zazumedia.ru/">zazumedia.ru</a></td><td id="O:Od" class="" style="width:88.9375px">15 700</td><td id="t==f" class="" style="width:72.140625px">40%</td><td id="lov;" class="" style="width:101.140625px">6 280</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">1406</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">id, password , pack</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-816e-96e0-e1eae2d3cec1"><td id="rmpX" class="" style="width:120.921875px"><a href="https://www.gupshup.io/">gupshup.io</a></td><td id="O:Od" class="" style="width:88.9375px">109 700</td><td id="t==f" class="" style="width:72.140625px">&lt;1%</td><td id="lov;" class="" style="width:101.140625px">&lt;1 097</td><td id="UJBF" class="" style="width:72.140625px">3 (нет рус)</td><td id="GK&gt;|" class="" style="width:130.140625px">-</td><td id="&gt;kDp" class="" style="width:109.140625px">16 000</td><td id="tCmY" class="" style="width:126.140625px">нет рус. версии сайта, но есть рус. документация</td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">channel, source, destination, message, src.name</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8128-bcf3-c1745a1ea2a9"><td id="rmpX" class="" style="width:120.921875px"><a href="https://sms-prosto.ru/">SMS-PROSTO.RU</a></td><td id="O:Od" class="" style="width:88.9375px">61 000</td><td id="t==f" class="" style="width:72.140625px">-</td><td id="lov;" class="" style="width:101.140625px">-</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">811</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">V</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON, XML</td><td id="Zbop" class="">на один</td><td id="Wtds" class="" style="width:340px">method, email+password (or key), text, phone, sender_name,</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81b3-9a16-d0addeb80090"><td id="rmpX" class="" style="width:120.921875px"><a href="https://redsms.ru/">redsms.ru</a></td><td id="O:Od" class="" style="width:88.9375px">15 100</td><td id="t==f" class="" style="width:72.140625px">-</td><td id="lov;" class="" style="width:101.140625px">-</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">827+226</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON, XML</td><td id="Zbop" class="">на один и на несколько</td><td id="Wtds" class="" style="width:340px">rout, from, to,  text</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-816b-80b0-cf0f1e5ab902"><td id="rmpX" class="" style="width:120.921875px"><a href="http://greensms.ru">greensms.ru</a> </td><td id="O:Od" class="" style="width:88.9375px">1 600</td><td id="t==f" class="" style="width:72.140625px">-</td><td id="lov;" class="" style="width:101.140625px">-</td><td id="UJBF" class="" style="width:72.140625px">1</td><td id="GK&gt;|" class="" style="width:130.140625px">18</td><td id="&gt;kDp" class="" style="width:109.140625px">-</td><td id="tCmY" class="" style="width:126.140625px"></td><td id="Kh[;" class="" style="width:49px">-</td><td id="CP~q" class="" style="width:65px">V</td><td id="u[=S" class="">JSON</td><td id="Zbop" class="">На один</td><td id="Wtds" class="" style="width:340px">user, pass. txt, to</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">sms.ru</summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-8173-a57f-e4bfa9fe925f"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><a href="https://sms.ru/api/send">API</a></div></figure></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81c1-87ec-cb44643fefc7" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81bf-9f73-cc8570361e4a" class="">Отправка СМС.</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-81b1-adf3-f3514b876ea0" class=""><strong>Примеры запросов</strong></h3></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81ac-b04f-eda2369e0e83" class="">Отправить один текст на один или несколько номеров, указанных через запятую:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-81a7-8bf2-c633ced89355" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">https://sms.ru/sms/send?api_id=[зарегистрируйтесь, чтобы получить api_id]&amp;to=79255070602,74993221627&amp;msg=hello+world&amp;json=1</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-810d-8eb5-fddc2cf3f974" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-810f-aa74-ebb7991f60a4" class="">Отправить разный текст на разные номера:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-81aa-b5ed-da6127fc58d1" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">https://sms.ru/sms/send?api_id=[зарегистрируйтесь, чтобы получить api_id]&amp;to[79255070602]=hello+world&amp;to[74993221627]=hello+world&amp;json=1</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8182-b146-df95e23edeb9" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-81d8-9179-f16ec39d09a5" class="">Параметры</h3></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-811b-b530-ce0bf5483ef2" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8150-8570-e1416bc77084"><td id="~K]C" class="" style="width:102px"><strong>Параметр</strong></td><td id="}L_Y" class=""><strong>Обязательный</strong></td><td id="EImF" class="" style="width:418px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ae-a0e1-e28a79d1ea48"><td id="~K]C" class="" style="width:102px">to</td><td id="}L_Y" class="">да</td><td id="EImF" class="" style="width:418px">Номер телефона получателя (либо несколько номеров, через запятую — до 100 штук за один запрос). Вы также можете указать номера в виде массива to[номер получателя]=текст&amp;to[номер получателя]=текст. Если вы указываете несколько номеров и один из них указан неверно, то вместо идентификатора сообщения в выдаче вы получите трехзначный код ошибки. <strong>Если вы отправляете более, чем на 10 номеров за раз</strong>, то рекомендуем параметр to передавать в теле запроса методом POST, а не в адресной строке.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-819d-b44f-c55e87452199"><td id="~K]C" class="" style="width:102px">msg</td><td id="}L_Y" class="">да</td><td id="EImF" class="" style="width:418px">Текст сообщения в кодировке UTF-8</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8152-a6d1-d1efd86db2b3"><td id="~K]C" class="" style="width:102px">json=1</td><td id="}L_Y" class="">рекомендуется</td><td id="EImF" class="" style="width:418px">Данный параметр вызывает ответ сервера в формате JSON, в котором предоставлено больше данных об отправленных сообщениях</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81f9-9521-f0b7a3f94e4a"><td id="~K]C" class="" style="width:102px">from</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Имя отправителя (должно быть согласовано с администрацией). Если не заполнено, в качестве отправителя будет указан ваш отправитель по умолчанию.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81a7-9a50-d5d7fdb37ca1"><td id="~K]C" class="" style="width:102px">ip</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Если СМС сообщение отправляется в ответ на действия пользователя (например сообщение содержит код авторизации), то мы можем защитить вас на случай от действий злоумышленников, которые вынуждают вас отправлять много сообщений на один или разные номера (к примеру, регистрируясь много раз подряд на вашем сайте с одного IP адреса). В этом параметре вы можете передать нам IP адрес вашего пользователя, и, если мы заметим, что с этим IP связано большое количество сообщений, то мы их начнем блокировать (ограничение настраивается в разделе &quot;Настройки&quot;).</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81db-82e5-e378cc6b4ffe"><td id="~K]C" class="" style="width:102px">time</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Если вам нужна отложенная отправка, то укажите время отправки. Указывается в формате UNIX TIME (пример: 1280307978). Должно быть не больше 2 месяцев с момента подачи запроса. Если время меньше текущего времени, сообщение отправляется моментально.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81d0-941d-eb519de6381c"><td id="~K]C" class="" style="width:102px">ttl</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Срок жизни сообщения в минутах (от 1 до 1440). Если сообщение не доставится за этот период (к примеру, телефон абонента не в сети), то оно будет уничтожено оператором. Если используется этот параметр, то стоимость недоставленного сообщения не компенсируется.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8135-9ad5-ca65337d8f48"><td id="~K]C" class="" style="width:102px">daytime=1</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Учитывает часовой пояс получателя. Если у получателя сейчас ночь (уже наступило время 20:00), то откладывает отправку до 10 часов утра. Если указан этот параметр, то параметр time игнорируется.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-811d-bb96-f6cdf0fe5774"><td id="~K]C" class="" style="width:102px">translit=1</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Переводит все русские символы в латинские.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8188-8e8f-c67f5d281b77"><td id="~K]C" class="" style="width:102px">test=1</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Имитирует отправку сообщения для тестирования ваших программ на правильность обработки ответов сервера. При этом само сообщение не отправляется и баланс не расходуется.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81de-b252-f921f47e8a6a"><td id="~K]C" class="" style="width:102px">partner_id=</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Если вы участвуете в партнерской программе, укажите этот параметр в запросе и получайте проценты от стоимости отправленных сообщений. Ваш уникальный идентификатор - - уже указан в параметре.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81e5-bb6b-d519882276be" class="">Авторизация осуществляется при помощи:</p></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-810c-be23-e2fa103f66ff" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ea-bb8b-f969150f5276"><td id="wsuw" class=""><strong>Параметр</strong></td><td id="_Ih]" class=""><strong>Обязательный</strong></td><td id="{zoI" class=""><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-815a-87f8-e3c054ee1e43"><td id="wsuw" class="">api_id</td><td id="_Ih]" class="">да</td><td id="{zoI" class="">Авторизацию по вашему уникальному ключу (api_id). Этот способ авторизации - самый удобный и приведен в примере выше. Ваш api_id вы можете найти на главной странице личного кабинета: [зарегистрируйтесь, чтобы получить api_id]</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8158-8636-eec085c854fc" class="">или</p></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-81b9-bd26-e5be8e871d13" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81c3-8a09-d7c9a96e0272"><td id="jOwJ" class=""><strong>Параметр</strong></td><td id="b^WO" class=""><strong>Обязательный</strong></td><td id="{AOB" class=""><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-810d-86bd-eaa4eb7d8d73"><td id="jOwJ" class="">login</td><td id="b^WO" class="">да</td><td id="{AOB" class="">Ваш номер телефона (логин): 79255070602</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ed-94fd-d4c5bea56317"><td id="jOwJ" class="">password</td><td id="b^WO" class="">да</td><td id="{AOB" class="">Пароль (безопасность гарантируется при использовании https)</td></tr></div></tbody></table></div></div></details></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">smsc.ru</summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-81f0-83bd-eb5649b7dfa0"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><a href="https://smsc.ru/api/#menu">API</a></div></figure></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8112-8d38-db94f7b114bf" class="">Отправка смс.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8130-b12f-ee967e22ee21" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-814a-91c2-c98082b7c921" class=""><strong>Примеры запросов</strong></h3></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81bf-9a28-d481eea52802" class="">Для отправки SMS необходимо вызвать методом GET или POST адрес:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-8165-9891-c4310e4dc2ab" class="code code-wrap"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">https://smsc.ru/sys/send.php?login=&lt;login&gt;&amp;psw=&lt;password&gt;&amp;phones=&lt;phones&gt;&amp;mes=&lt;message&gt;</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8113-9a33-dcbc72a26267" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8117-b707-ff53f17c8390" class="">Для получения стоимости SMS необходимо вызвать методом GET или POST адрес:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-81c3-99c4-d19acc986b25" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">https://smsc.ru/sys/send.php?login=&lt;login&gt;&amp;psw=&lt;password&gt;&amp;phones=&lt;phones&gt;&amp;mes=&lt;message&gt;&amp;cost=1</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8170-b894-f9a83e93da58" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-81dc-bc7c-dcff52fc78a3" class="">Параметры</h3></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-81e6-96a1-e7ba9c9829b9" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-813c-bfdc-e6250edb72a7"><td id="~K]C" class="" style="width:102px"><strong>Параметр</strong></td><td id="}L_Y" class=""><strong>Обязательный</strong></td><td id="EImF" class="" style="width:418px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8134-a5a7-f0b907a164b5"><td id="~K]C" class="" style="width:102px"><strong>login</strong></td><td id="}L_Y" class="">да</td><td id="EImF" class="" style="width:418px">Логин Клиента.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-810f-b082-cad0493c771c"><td id="~K]C" class="" style="width:102px"><strong>psw</strong></td><td id="}L_Y" class="">да</td><td id="EImF" class="" style="width:418px">Пароль Клиента</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8166-adde-fb8bc389c8a4"><td id="~K]C" class="" style="width:102px"><strong>phones</strong></td><td id="}L_Y" class="">да</td><td id="EImF" class="" style="width:418px">Номер или разделенный запятой или точкой с запятой список номеров мобильных телефонов в международном формате, на которые отправляется сообщение. Номера могут передаваться без знака &quot;+&quot;. Если номер передан без знака &quot;+&quot;, то он может быть исправлен автоматическим форматированием и приведен к правильному международному формату. Таким образом, некоторые ошибки при вводе номеров телефонов могут быть исправлены автоматически. Для отключения автоисправления передайте номер со знаком &quot;+&quot;.<br/>Также можно отправлять сообщение на группу номеров, указав специальный код &quot;G&lt;номер группы&gt;&quot;. Сообщение будет отправлено на все номера, принадлежащие данной группе. Для e-mail сообщения передается список e-mail адресов получателей.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-819a-a30e-f86602155431"><td id="~K]C" class="" style="width:102px"><strong>mes</strong></td><td id="}L_Y" class="">да</td><td id="EImF" class="" style="width:418px">Текст отправляемого сообщения. Максимальный размер – 1000 символов. Сообщение при необходимости будет разбито на несколько SMS, отправленных абоненту и оплаченных по отдельности. Размер одного SMS – 160 символов в латинице или 70 символов в кириллице. При разбивке сообщения на несколько SMS в каждую часть добавляется заголовок для объединения частей в одно сообщение на телефоне получателя, и максимальная длина становится 67 для кириллицы и 153 для латинских букв. В текст сообщения можно добавлять <a href="https://smsc.ru/api/http/send/smsinfo/">комментарии</a><br/>, предназначенные для просмотра отправителем истории в личном кабинете.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8181-9667-d7167d989eea"><td id="~K]C" class="" style="width:102px"><strong>id</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Идентификатор сообщения. Назначается Клиентом. Служит для дальнейшей идентификации сообщения. Если не указывать, то будет назначен автоматически. Не обязательно уникален. Идентификатор представляет собой 32-битное число в диапазоне от 1 до 2147483647, либо строку длиной до 40 символов, состоящую из латинских букв, цифр и символов &quot;.-_&quot;.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81e0-bfd3-d0e61bb326ef"><td id="~K]C" class="" style="width:102px"><strong>sender</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Имя отправителя, отображаемое в телефоне получателя. Разрешены английские буквы, цифры, пробел и некоторые символы. Длина – 11 символов или 15 цифр. </td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-814a-b620-e3e8bea74935"><td id="~K]C" class="" style="width:102px"><strong>translit</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак того, что сообщение необходимо перевести в транслит.<br/>0 (по умолчанию) – не переводить в транслит.<br/>1 – перевести в транслит в виде &quot;translit&quot;.<br/>2 – перевести в транслит в виде &quot;mpaHc/Ium&quot;.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8119-80a4-fd94117e2fb9"><td id="~K]C" class="" style="width:102px"><strong>tinyurl</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Автоматически сокращать ссылки в сообщениях. Позволяет заменять ссылки в тексте сообщения на короткие для сокращения длины, а также для отслеживания количества переходов на этой странице.<br/>0 (по умолчанию) – оставить ссылки в тексте сообщения без изменений.<br/>1 – сократить ссылки.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-810f-9015-c011a00a6139"><td id="~K]C" class="" style="width:102px"><strong>time</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Время отправки SMS-сообщения абоненту.<br/>Форматы:<br/>DDMMYYhhmm или DD.MM.YY hh:mm.<br/>h1-h2. Задает диапазон времени в часах. Если текущее время меньше h1, то SMS-сообщение будет отправлено абоненту при наступлении времени h1, если текущее время попадает в промежуток от h1 до h2, то сообщение будет отправлено немедленно, в другом случае отправка будет выполнена на следующий день при достижении времени h1. Данная функция, например, полезна для того, чтобы не допустить получение SMS-сообщений абонентами в ночное время.<br/>0ts, где ts – timestamp, время в секундах, прошедшее с 1 января 1970 года.<br/>+m. Задает относительное смещение времени от текущего в минутах. Символ + должен кодироваться как %2B в http-запросе.<br/>Если time = 0 или указано уже прошедшее время, то сообщение будет отправлено немедленно.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81c0-952c-e89c4990f86a"><td id="~K]C" class="" style="width:102px"><strong>tz</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Часовой пояс, в котором задается параметр time. Указывается относительно московского времени. Параметр tz может быть как положительным, так и отрицательным. Если tz равен 0, то будет использован московский часовой пояс, если же параметр tz не задан, то часовой пояс будет взят из настроек Клиента.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81e3-9609-e2d87c1533ce"><td id="~K]C" class="" style="width:102px"><strong>period</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Промежуток времени, в течение которого необходимо отправить рассылку. Представляет собой число в диапазоне от 0.1 до 720 часов. Применяется совместно с параметром freq. Данный параметр позволяет растянуть рассылку во времени для постепенного получения SMS-сообщений абонентами.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8151-b3bf-d06559bcaaf8"><td id="~K]C" class="" style="width:102px"><strong>freq</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Интервал или частота, с которой нужно отправлять SMS-рассылку на очередную группу номеров. Количество номеров в группе рассчитывается автоматически на основе параметров period и freq. Задается в промежутке от 1 до 1440 минут. Без параметра period параметр freq игнорируется.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81bf-9a47-eb325d14e7f6"><td id="~K]C" class="" style="width:102px"><strong>flash</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак Flash сообщения, отображаемого сразу на экране телефона.<br/>0 (по умолчанию) – обычное сообщение.<br/>1 – Flash сообщение.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81b4-aff6-f1f86e437a3a"><td id="~K]C" class="" style="width:102px"><strong>bin</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак бинарного сообщения.<br/>0 (по умолчанию) – обычное сообщение.<br/>1 – бинарное сообщение. В http-запросе необходимо закодировать с помощью функции urlencode.<br/>2 – бинарное сообщение, представленное в виде шестнадцатеричной строки (hex).<br/><br/>Бинарное сообщение передается вместе с UDH заголовком в начале в параметре mes, в котором первый байт задает длину заголовка. Чтобы передать бинарное сообщение без UDH заголовка, укажите нулевой байт в начале сообщения (00 в hex).<br/>Для возможности передачи параметров pid и dcs необходимо в конец бинарного сообщения добавить специальную комбинацию &quot;\n~~~\n&quot; (перевод строки, 3 символа тильды и снова перевод строки) и затем текст &quot;pid: значение1, dcs: значение2&quot; с точным сохранением пробелов.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81a5-827e-f8259ef28a58"><td id="~K]C" class="" style="width:102px"><strong>push</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак wap-push сообщения, с помощью которого можно отправить интернет-ссылку на телефон.<br/>0 (по умолчанию) – обычное сообщение.<br/>1 – wap-push сообщение. В параметре mes необходимо передать ссылку и заголовок через перевод строки.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8189-999f-f3f57fe73c51"><td id="~K]C" class="" style="width:102px"><strong>hlr</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак HLR-запроса для получения информации о номере из базы оператора без отправки реального SMS.<br/>0 (по умолчанию) – обычное сообщение.<br/>1 – HLR-запрос. Будет выполнен HLR-запрос для каждого номера телефона в списке. Параметр mes не используется.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-812d-8524-f0da87db6de3"><td id="~K]C" class="" style="width:102px"><strong>ping</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак специального SMS, не отображаемого в телефоне, для проверки номеров на доступность в реальном времени по статусу доставки.<br/>0 (по умолчанию) – обычное сообщение.<br/>1 – ping-sms. Будет отправлено Ping-SMS на каждый номер телефона в списке. Параметр mes не используется.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-812e-a23d-ed5bcbbca672"><td id="~K]C" class="" style="width:102px"><strong>mms</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак MMS-сообщения, с помощью которого можно передавать текст (txt), изображения различных форматов (jpg, gif, png), музыку (wav, amr, mp3, mid) и видео (mp4, 3gp). Файлы передаются в теле http-запроса.<br/>0 (по умолчанию) – обычное сообщение.<br/>1 – MMS-сообщение. Будет отправлено MMS на каждый номер телефона в списке.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8119-821a-ee00674b92be"><td id="~K]C" class="" style="width:102px"><strong>mail</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак e-mail сообщения. Файлы, прикрепляемые к сообщению, передаются методом POST в теле http-запроса.<br/>0 (по умолчанию) – обычное сообщение.<br/>1 – e-mail сообщение.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8119-b249-f81816f75934"><td id="~K]C" class="" style="width:102px"><strong>soc</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак soc-сообщения, отправляемого пользователям социальных сетей &quot;Одноклассники&quot;, &quot;ВКонтакте&quot; или пользователям &quot;Mail.Ru Агент&quot;.<br/>0 (по умолчанию) – обычное сообщение.<br/>1 – soc-сообщение.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-810b-a4f8-ea6a7881428b"><td id="~K]C" class="" style="width:102px"><strong>viber</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак viber-сообщения, отправляемого пользователям мессенджера Viber.<br/>0 (по умолчанию) – обычное сообщение.<br/>1 – viber-сообщение.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8142-86c6-cd354975c9e3"><td id="~K]C" class="" style="width:102px"><strong>whatsapp</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак whatsapp-сообщения, отправляемого пользователям мессенджера WhatsApp.<br/>0 (по умолчанию) – обычное сообщение.<br/>1 – whatsapp-сообщение.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ce-b677-dc829683fbe9"><td id="~K]C" class="" style="width:102px"><strong>fileurl</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Полный http-адрес файла для загрузки и передачи в сообщении. Минимальный размер файла составляет 101 байт.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81cc-a138-dcc1595bf101"><td id="~K]C" class="" style="width:102px"><strong>call</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак голосового сообщения. При формировании голосового сообщения можно передавать как текст, так и прикреплять файлы. Файлы, добавляемые к сообщению, должны передаваться методом POST в теле http-запроса.<br/>0 (по умолчанию) – обычное сообщение.<br/>1 – голосовое сообщение.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8131-806a-eec3c693aa98"><td id="~K]C" class="" style="width:102px"><strong>voice</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Голос, используемый для озвучивания текста (только для голосовых сообщений).m – мужской голос.m2 – мужской голос 2.m3 – мужской голос 3.m4 (по умолчанию) – мужской голос 4.w – женский голос.w2 – женский голос 2.w3 – женский голос 3.w4 – женский голос 4.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81b1-b582-d87556f24133"><td id="~K]C" class="" style="width:102px"><strong>param</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Разделенный запятой список параметров для голосового сообщения в формате &quot;param=w,i,n&quot;.Здесь:w – время ожидания поднятия трубки абонентом после начала звонка в секундах. Если в течение указанного времени абонент не поднимет трубку, то звонок уйдет на повтор с ошибкой &quot;абонент занят&quot;. Рабочий диапазон значений параметра от 10 до 35, но можно указывать интервал от 0 до 99 (в случае, если значение меньше 10, то оно будет приведено к 10, аналогично для верхней границы).i – интервал повтора, то есть промежуток времени, по истечении которого произойдет повторный звонок (в секундах). Рабочий диапазон параметра от 10 до 3600 (в случае, если значение меньше 10, то оно будет приведено к 10).n – общее количество попыток дозвона. Рабочий диапазон значений от 1 до 9 (0 будет приведен к 1).При указании значения любого параметра, отличного от возможных, будут использованы значения всех параметров по умолчанию (n = 8, w = 25, i от 3 до 14 секунд по нарастающей).</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-818b-9442-c0907b15be9b"><td id="~K]C" class="" style="width:102px"><strong>subj</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Тема MMS или e-mail сообщения. При отправке e-mail указание темы, текста и адреса отправителя обязательно. Для MMS обязательным является указание темы или текста. Если не указать тему MMS, то в ее качестве будет использовано имя отправителя, переданное в запросе или используемое по умолчанию.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8106-9d8f-dece923bc912"><td id="~K]C" class="" style="width:102px"><strong>charset</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Кодировка переданного сообщения, если используется отличная от кодировки по умолчанию windows-1251. Варианты: utf-8 и koi8-r.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81be-85c0-e50b206e8d5f"><td id="~K]C" class="" style="width:102px"><strong>cost</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак необходимости получения стоимости рассылки.<br/>0 (по умолчанию) – обычная отправка.<br/>1 – получить стоимость рассылки без реальной отправки. <br/>2 – обычная отправка, но добавить в ответ стоимость выполненной рассылки.<br/>3 – обычная отправка, но добавить в ответ стоимость и новый баланс Клиента.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-814d-97db-d59a5174aadf"><td id="~K]C" class="" style="width:102px"><strong>fmt</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Формат ответа сервера об успешной отправке.<br/>0 – (по умолчанию) в виде строки (OK - 1 SMS, ID - 1234).<br/>1 – вернуть ответ в виде чисел: ID и количество SMS через запятую (1234,1), при cost = 2 еще стоимость через запятую (1234,1,1.40), при cost = 3 еще новый баланс Клиента (1234,1,1.40,100.50), при cost = 1 стоимость и количество SMS через запятую (1.40,1).<br/>2 – ответ в xml формате.<br/>3 – ответ в json формате.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ff-be11-f0f5d6013688"><td id="~K]C" class="" style="width:102px"><strong>list</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Список номеров телефонов и соответствующих им сообщений, разделенных двоеточием или точкой с запятой и представленный в виде:<br/>phones1:mes1<br/>phones2:mes2<br/>...<br/>Строки разделяются через символ новой строки (%0A). В качестве phones можно указать несколько номеров телефонов через запятую. Если в сообщении mes требуется передать символ новой строки, то укажите его через \n. В случае невозможности корректировки текста мультистрокового сообщения возможно включение специального режима для передачи такого типа сообщений. Для этого необходимо дополнительно передавать в запросе параметр nl, равный 1.<br/>В случае необходимости передачи разных имен отправителей (и, возможно, различных часовых поясов абонентов) для разных сообщений можно использовать следующий формат передачи:<br/>sender1,tz1|phones1:mes1<br/>sender2,tz2|phones2:mes2<br/>...<br/>В данном случае параметр tz является необязательным.<br/>Параметр list позволяет выполнять множественную рассылку с разными сообщениями на несколько телефонов одним http-запросом. Сообщениям в запросе присваивается единый идентификатор. Весь параметр должен быть закодирован с помощью функции urlencode.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8171-99ac-e978d24c9f43"><td id="~K]C" class="" style="width:102px"><strong>valid</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Срок &quot;жизни&quot; SMS-сообщения. Определяет время, в течение которого оператор будет пытаться доставить сообщение абоненту. Диапазон от 1 до 24 часов. Также возможно передавать время в формате чч:мм в диапазоне от 00:01 до 24:00.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-819f-b519-d5e5d599ec9d"><td id="~K]C" class="" style="width:102px"><strong>maxsms</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Максимальное количество SMS, на которые может разбиться длинное сообщение. Слишком длинные сообщения будут обрезаться так, чтобы не переполнить количество SMS, требуемых для их передачи. Этим параметром вы можете ограничить максимальную стоимость сообщений, так как за каждое SMS снимается отдельная плата.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81d5-84a4-c550b05103ac"><td id="~K]C" class="" style="width:102px"><strong>imgcode</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Значение буквенно-цифрового кода, введенного с &quot;captcha&quot; при использовании <a href="https://smsc.ru/api/http/miscellaneous/antispam/">антиспам проверки</a><br/>. Данный параметр должен использоваться совместно с параметром <strong>userip</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8137-b458-ea5f6a3f9f5c"><td id="~K]C" class="" style="width:102px"><strong>userip</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Значение IP-адреса, для которого будет действовать лимит на максимальное количество сообщений с одного IP-адреса в сутки, установленный в <a href="https://smsc.ru/edit/">настройках</a><br/> личного кабинета в пункте &quot;Лимиты и ограничения&quot;.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81cb-b47c-e924656c2bca"><td id="~K]C" class="" style="width:102px"><strong>err</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак необходимости добавления в ответ сервера списка ошибочных номеров.0 (по умолчанию) – не добавлять список (обычный ответ сервера).1 – в ответ добавляется список ошибочных номеров телефонов с соответствующими статусами.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8166-8b44-e4810715810f"><td id="~K]C" class="" style="width:102px"><strong>op</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Признак необходимости добавления в ответ сервера информации по каждому номеру.0 (по умолчанию) – не добавлять список (обычный ответ сервера).1 – в ответ добавляется список всех номеров телефонов с соответствующими статусами, значениями mcc и mnc, стоимостью, и, в случае ошибочных номеров, кодами ошибок.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8115-8590-e61fe3d684cd"><td id="~K]C" class="" style="width:102px"><strong>pp</strong></td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Осуществляет привязку Клиента в качестве реферала к определенному ID партнера для текущего запроса.<br/>При передаче данного параметра в виде &quot;pp=&lt;ID партнера&gt;&quot; Клиент с логином login временно становится рефералом партнера с ID &lt;ID партнера&gt;. Отчисления по партнерской программе будут сделаны именно для текущего запроса, постоянной привязки не происходит. Данный параметр позволяет временно устанавливать Клиента в качестве реферала из своих сервисов и программ, где нет возможности зарегистрировать Клиента по реферальной ссылке.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8148-90d0-c63063ba3d33" class="">
+</p></div></div></details></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">mailchimp.com</summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-8138-8abd-efd97c66f02d"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><a href="https://mailchimp.com/developer/marketing/docs/fundamentals/#api-structure">API</a></div></figure></div><div style="display:contents" dir="auto"><p id="1287e581-6658-812e-8595-c87c93a7a74f" class="">Отправка e-mail.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81ba-9bbd-cea2f3f7f0db" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-81f9-886e-ff92849e8546" class=""><strong>Пример запроса</strong></h3></div><div style="display:contents" dir="auto"><p id="1287e581-6658-819b-8d54-f28b3e3e25d4" class="">
+</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-81d6-81fa-e66aebcdd1cd" class="code code-wrap"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">curl -X POST \
+  https://mandrillapp.com/api/1.0/messages/send \
+  -d &#x27;{&quot;key&quot;:&quot;&quot;,&quot;message&quot;:{&quot;html&quot;:&quot;&quot;,&quot;text&quot;:&quot;&quot;,&quot;subject&quot;:&quot;&quot;,&quot;from_email&quot;:&quot;&quot;,&quot;from_name&quot;:&quot;&quot;,&quot;to&quot;:[],&quot;headers&quot;:{},&quot;important&quot;:false,&quot;track_opens&quot;:false,&quot;track_clicks&quot;:false,&quot;auto_text&quot;:false,&quot;auto_html&quot;:false,&quot;inline_css&quot;:false,&quot;url_strip_qs&quot;:false,&quot;preserve_recipients&quot;:false,&quot;view_content_link&quot;:false,&quot;bcc_address&quot;:&quot;&quot;,&quot;tracking_domain&quot;:&quot;&quot;,&quot;signing_domain&quot;:&quot;&quot;,&quot;return_path_domain&quot;:&quot;&quot;,&quot;merge&quot;:false,&quot;merge_language&quot;:&quot;mailchimp&quot;,&quot;global_merge_vars&quot;:[],&quot;merge_vars&quot;:[],&quot;tags&quot;:[],&quot;subaccount&quot;:&quot;&quot;,&quot;google_analytics_domains&quot;:[],&quot;google_analytics_campaign&quot;:&quot;&quot;,&quot;metadata&quot;:{&quot;website&quot;:&quot;&quot;},&quot;recipient_metadata&quot;:[],&quot;attachments&quot;:[],&quot;images&quot;:[]},&quot;async&quot;:false,&quot;ip_pool&quot;:&quot;&quot;,&quot;send_at&quot;:&quot;&quot;}&#x27;</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8166-aca2-dc0daa93f637" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-81b6-bc51-feb9f4344478" class="">Параметры</h3></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-81f1-9b58-e7f0129827f4" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-817f-b7b1-ecc15c3d908a"><td id="~K]C" class="" style="width:102px"><strong>Параметр</strong></td><td id="}L_Y" class=""><strong>Обязательный</strong></td><td id="EImF" class="" style="width:418px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8173-b9a3-d67385fe34b7"><td id="~K]C" class="" style="width:102px">key</td><td id="}L_Y" class="">да</td><td id="EImF" class="" style="width:418px">действительный ключ API</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8115-a210-fbb67e8a71ab"><td id="~K]C" class="" style="width:102px">message </td><td id="}L_Y" class="">да</td><td id="EImF" class="" style="width:418px">информация о сообщении для отправки</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8190-bede-f87de9353fbc"><td id="~K]C" class="" style="width:102px">async</td><td id="}L_Y" class="">да</td><td id="EImF" class="" style="width:418px">включить фоновый режим отправки, оптимизированный для массовой рассылки. В асинхронном режиме messages/send немедленно возвращает статус «в очереди» для каждого получателя. Чтобы обрабатывать отклонения при отправке в асинхронном режиме, настройте веб-перехватчик для события «отклонить». По умолчанию false для сообщений с не более чем 10 получателями; сообщения с более чем 10 получателями всегда отправляются асинхронно, независимо от значения async.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81d2-93f0-f399b3bd1d6e"><td id="~K]C" class="" style="width:102px">ip_pool</td><td id="}L_Y" class="">да</td><td id="EImF" class="" style="width:418px">имя выделенного пула IP-адресов, который следует использовать для отправки сообщения. Если у вас нет выделенных IP-адресов, этот параметр не действует. Если вы укажете несуществующий пул, вместо него будет использоваться пул по умолчанию.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8154-af20-d852ff46a488"><td id="~K]C" class="" style="width:102px">send_at</td><td id="}L_Y" class="">да</td><td id="EImF" class="" style="width:418px">когда это сообщение должно быть отправлено в виде временной метки UTC в формате ГГГГ-ММ-ДД ЧЧ:ММ:СС. Если вы укажете время в прошлом, сообщение будет отправлено немедленно; для будущих дат вы ограничены одним годом с даты планирования.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-81e7-9aaa-e63e6a7d1f18" class="">Дополнительные параметры для message</h3></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-81b2-96ed-da1c2478ef88" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8147-8133-f0b3f26ffea5"><td id="~K]C" class="" style="width:102px"><strong>Параметр</strong></td><td id="}L_Y" class=""><strong>Доп.параметры</strong></td><td id="EImF" class="" style="width:418px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-814a-90b7-cdb394439a18"><td id="~K]C" class="" style="width:102px">html</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">действительный ключ API</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8133-be35-e8b75d1744fc"><td id="~K]C" class="" style="width:102px">text</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">информация о сообщении для отправки</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81b0-8f51-cfe66a658737"><td id="~K]C" class="" style="width:102px">subject</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">включить фоновый режим отправки, оптимизированный для массовой рассылки. В асинхронном режиме messages/send немедленно возвращает статус «в очереди» для каждого получателя. Чтобы обрабатывать отклонения при отправке в асинхронном режиме, настройте веб-перехватчик для события «отклонить». По умолчанию false для сообщений с не более чем 10 получателями; сообщения с более чем 10 получателями всегда отправляются асинхронно, независимо от значения async.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8178-8710-e5b3d046d599"><td id="~K]C" class="" style="width:102px">from_email</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">имя выделенного пула IP-адресов, который следует использовать для отправки сообщения. Если у вас нет выделенных IP-адресов, этот параметр не действует. Если вы укажете несуществующий пул, вместо него будет использоваться пул по умолчанию.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-818c-9385-e9b1f94671c8"><td id="~K]C" class="" style="width:102px">from_name</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">когда это сообщение должно быть отправлено в виде временной метки UTC в формате ГГГГ-ММ-ДД ЧЧ:ММ:СС. Если вы укажете время в прошлом, сообщение будет отправлено немедленно; для будущих дат вы ограничены одним годом с даты планирования.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ef-bbc9-f3290157bf8e"><td id="~K]C" class="" style="width:102px">to</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">массив информации о получателе.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-815b-91f7-d9b5f9274a8f"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">email</td><td id="EImF" class="" style="width:418px">адрес электронной почты получателя</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8161-b827-d28ee4cd4306"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">name</td><td id="EImF" class="" style="width:418px">необязательное отображаемое имя для получателя</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8189-9ce0-e0c3ccc17b2b"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">type</td><td id="EImF" class="" style="width:418px">тип заголовка для получателя, по умолчанию &quot;to&quot;, если он не указан. Возможные значения: &quot;to&quot;, &quot;cc&quot; или &quot;bcc&quot;.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81f0-a476-ca6b34254f79"><td id="~K]C" class="" style="width:102px">headers</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">необязательные дополнительные заголовки для добавления к сообщению (разрешено большинство заголовков)</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81fb-af49-c83b72fe2f6b"><td id="~K]C" class="" style="width:102px">important</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">важно ли это сообщение, и должно ли оно быть доставлено перед неважными сообщениями</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-814e-8a19-d80b3bdb3acd"><td id="~K]C" class="" style="width:102px">track_opens</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">включать или нет открытое отслеживание сообщения</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ce-83b1-f93dd84b19a4"><td id="~K]C" class="" style="width:102px">track_clicks</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">включать или нет отслеживание кликов для сообщения</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81aa-8c74-ed3093e0eecd"><td id="~K]C" class="" style="width:102px">auto_text</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">следует ли автоматически генерировать текстовую часть для сообщений, которым не задан текст</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8192-b348-ea2b509132fa"><td id="~K]C" class="" style="width:102px">auto_html</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">следует ли автоматически генерировать часть HTML для сообщений, которым не предоставлен HTML</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81b8-ab7a-cbfe41319da2"><td id="~K]C" class="" style="width:102px">inline_css</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">следует ли автоматически встраивать все стили CSS, представленные в сообщении HTML — только для HTML-документов размером менее 256 КБ.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8164-8b0d-e73ac9f1222d"><td id="~K]C" class="" style="width:102px">url_strip_qs</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">следует ли отделять строку запроса от URL-адресов при агрегировании отслеживаемых данных URL-адресов.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8109-af57-d132804cb897"><td id="~K]C" class="" style="width:102px">preserve_recipients</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">следует ли отображать всех получателей в заголовке «Кому» для каждого электронного письма</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-813e-8c23-ebfdeda23838"><td id="~K]C" class="" style="width:102px">view_content_link</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">установите значение false, чтобы удалить ведение журнала содержимого для конфиденциальных электронных писем.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ad-8405-e83380c56211"><td id="~K]C" class="" style="width:102px">bcc_address</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">необязательный адрес для получения точной копии электронной почты каждого получателя</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8117-a278-c2ff27e0f334"><td id="~K]C" class="" style="width:102px">tracking_domain</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">личный домен для отслеживания открытий и кликов вместо <a href="http://mandrillapp.com/">mandrillapp.com</a></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81d2-9269-e2c2206f87d8"><td id="~K]C" class="" style="width:102px">signing_domain</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">личный домен для использования для подписи SPF/DKIM вместо mandrill (для «через» или «от имени» в почтовых клиентах)</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ea-b559-e37da0969be6"><td id="~K]C" class="" style="width:102px">return_path_domain</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">пользовательский домен для использования в качестве пути возврата сообщений</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8198-b99b-e27775204685"><td id="~K]C" class="" style="width:102px">merge</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">следует ли оценивать теги слияния в сообщении. Будет автоматически установлено значение true, если предоставлены merge_vars или global_merge_vars.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81d1-8977-d78372b2fce6"><td id="~K]C" class="" style="width:102px">merge_language</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">язык тегов слияния, используемый при оценке тегов слияния, либо mailchimp, либо handlebars. Возможные значения: &quot;mailchimp&quot; или &quot;handlebars&quot;.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8162-b154-e1db9763728c"><td id="~K]C" class="" style="width:102px">global_merge_vars</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">глобальные переменные слияния для использования всеми получателями. Вы можете переопределить их для каждого получателя.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8187-8654-ffd4861f83b9"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">name</td><td id="EImF" class="" style="width:418px">имя глобальной переменной слияния. Имена переменных слияния нечувствительны к регистру и не могут начинаться с _.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81c6-9ae6-c8889839a6aa"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">content</td><td id="EImF" class="" style="width:418px">содержимое глобальной переменной слияния</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ac-b75a-f82968cc0ce4"><td id="~K]C" class="" style="width:102px">merge_vars</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">переменные слияния для каждого получателя, которые переопределяют глобальные переменные слияния с тем же именем.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-811b-8817-c64880a35fa1"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">rcpt</td><td id="EImF" class="" style="width:418px">адрес электронной почты получателя, к которому должны применяться переменные слияния</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81e6-a477-ff22690a241c"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">vars</td><td id="EImF" class="" style="width:418px">переменные слияния получателя</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-813d-a0eb-e9a75576a2a5"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">name</td><td id="EImF" class="" style="width:418px">имя переменной слияния. Имена переменных слияния нечувствительны к регистру и не могут начинаться с _.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-813e-84bf-fbcecfe6be64"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">content</td><td id="EImF" class="" style="width:418px">содержимое переменной слияния</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81a5-8d4d-cde33103e382"><td id="~K]C" class="" style="width:102px">tags</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">массив строк для пометки сообщения. Статистика накапливается с помощью тегов, хотя мы храним только первые 100, которые видим, поэтому они не должны быть уникальными или часто меняться. Теги должны содержать не более 50 символов. Любые теги, начинающиеся со знака подчеркивания, зарезервированы для внутреннего использования и вызовут ошибки.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81f3-bf30-f96dbf8ad773"><td id="~K]C" class="" style="width:102px">subaccount</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">уникальный идентификатор субаккаунта для этого сообщения - должен уже существовать, иначе произойдет сбой с ошибкой</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ea-a833-f65f974fcd82"><td id="~K]C" class="" style="width:102px">google_analytics_domains</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">массив строк, указывающий, для каких совпадающих URL-адресов будут автоматически добавляться параметры Google Analytics к строке запроса.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81c0-8f00-d9127f1e0f8a"><td id="~K]C" class="" style="width:102px">google_analytics_campaign</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">необязательная строка, указывающая значение для параметра отслеживания utm_campaign. Если это не указано, вместо этого будет использоваться адрес электронной почты отправителя.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8156-a3cc-f0c2a5bd7469"><td id="~K]C" class="" style="width:102px">metadata</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">метаданные ассоциативный массив пользовательских метаданных. Mandrill сохранит эти метаданные и сделает их доступными для поиска. Кроме того, вы можете выбрать до 10 полей метаданных для индексации и сделать доступными для поиска с помощью API поиска Mandrill.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ba-b73d-d8679f7db319"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">website</td><td id="EImF" class="" style="width:418px">действительный URL-адрес веб-сайта</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81c2-ad86-d5c83520927b"><td id="~K]C" class="" style="width:102px">recipient_metadata</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">Метаданные для каждого получателя, которые переопределяют глобальные значения, указанные в параметре метаданных.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ba-ac10-d0d3d6fdf27d"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">rcpt</td><td id="EImF" class="" style="width:418px">адрес электронной почты получателя, с которым связаны метаданные</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-817a-bccf-ed8d0d96e770"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">values</td><td id="EImF" class="" style="width:418px">связанный массив, содержащий уникальные метаданные получателя. Если ключ существует как в метаданных для каждого получателя, так и в глобальных метаданных, будут использоваться метаданные для каждого получателя.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-811f-90ab-dbb09ce57c72"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">user_id</td><td id="EImF" class="" style="width:418px">массив поддерживаемых вложений для добавления к сообщению</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81f2-9eb5-f8b9958870ab"><td id="~K]C" class="" style="width:102px">attachments</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">массив поддерживаемых вложений для добавления к сообщению</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8187-af31-ff98e2dc3ebd"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">type</td><td id="EImF" class="" style="width:418px">MIME-тип вложения</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-813e-bcea-cea8478af172"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">name</td><td id="EImF" class="" style="width:418px">имя файла вложения</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81b2-b920-e112270fa195"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">content</td><td id="EImF" class="" style="width:418px">содержимое вложения в виде строки в кодировке base64</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-812c-8615-eeb18371ecdf"><td id="~K]C" class="" style="width:102px">images</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">массив встроенных изображений для добавления к сообщению</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-818b-843a-e49da06b2f0d"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">type</td><td id="EImF" class="" style="width:418px">MIME-тип изображения — должен начинаться с «image/»</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ba-97a2-c9334392d026"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">name</td><td id="EImF" class="" style="width:418px">идентификатор содержимого изображения — используйте для ссылки на изображение в вашем HTML-содержимом.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ed-9096-c7b8d7e74bba"><td id="~K]C" class="" style="width:102px"></td><td id="}L_Y" class="">content</td><td id="EImF" class="" style="width:418px">содержимое изображения в виде строки в кодировке base64</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81d8-8a78-df9ff4727a95"><td id="~K]C" class="" style="width:102px">async</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">включить фоновый режим отправки, оптимизированный для массовой рассылки. В асинхронном режиме messages/send немедленно возвращает статус «в очереди» для каждого получателя. Чтобы обрабатывать отклонения при отправке в асинхронном режиме, настройте веб-перехватчик для события «отклонить». По умолчанию false для сообщений с не более чем 10 получателями; сообщения с более чем 10 получателями всегда отправляются асинхронно, независимо от значения async.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ef-9c34-fe79b035fd1e"><td id="~K]C" class="" style="width:102px">ip_pool</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">имя выделенного пула IP-адресов, который следует использовать для отправки сообщения. Если у вас нет выделенных IP-адресов, этот параметр не действует. Если вы укажете несуществующий пул, вместо него будет использоваться пул по умолчанию.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81db-9233-e31c07ac91f1"><td id="~K]C" class="" style="width:102px">send_at</td><td id="}L_Y" class=""></td><td id="EImF" class="" style="width:418px">когда это сообщение должно быть отправлено в виде временной метки UTC в формате ГГГГ-ММ-ДД ЧЧ:ММ:СС. Если вы укажете время в прошлом, сообщение будет отправлено немедленно; для будущих дат вы ограничены одним годом с даты планирования.</td></tr></div></tbody></table></div></div></details></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">sendpulse.com</summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-8192-9aa3-d634c82faeea"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><a href="https://sendpulse.com/ru/integrations/api/smtp">API</a></div></figure></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8186-a53e-ed1195ceb4ba" class="">Отправка как смс так и e-mail рассылок</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-812a-b805-d4cff4708848" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-81d0-b28e-e72ab74e99bf" class=""><strong>Примеры запросов для e-mail </strong></h3></div><div style="display:contents" dir="auto"><p id="1287e581-6658-815a-b722-d779a4452e74" class="">Пример запроса создания рассылки с шаблоном:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-81e1-a827-e1f9ca1ed335" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;sender_name&quot;:&quot;my_sender_name&quot;,
+    &quot;sender_email&quot;:&quot;my_sender@test.com&quot;,
+    &quot;subject&quot;:&quot;hello customer&quot;,
+    &quot;list_id&quot;:&quot;756589&quot;,
+    &quot;name&quot;:&quot;my_api_campaign&quot;,
+    &quot;template_id&quot;: &quot;775667&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81e0-8553-dbb87304f662" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81a2-851e-c521a6a642e7" class="">Пример запроса создания запланированной рассылки на динамический список:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-81f1-b8d2-f5790012485f" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">{
+  &quot;sender_name&quot;:&quot;API_TEST&quot;,
+  &quot;sender_email&quot;:&quot;my_sender@test.com&quot;,
+  &quot;subject&quot;:&quot;API campaign&quot;,
+  &quot;list_id&quot;:&quot;756589&quot;,
+  &quot;name&quot;:&quot;api campaign&quot;,
+  &quot;body&quot;: &quot;SmFja2llIENoYW4=&quot;,
+  &quot;send_date&quot;:&quot;2016-02-02 23:34:23&quot;,
+  &quot;use_dynamic_list&quot;: true
+}
+</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8108-a5fa-c4e31c45c402" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81d1-8993-ca382a764e7e" class="">Пример запроса создания черновика:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-8131-a2f3-d812c92bbb6c" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;sender_name&quot;:&quot;my_sender_name&quot;,
+    &quot;sender_email&quot;:&quot;my_sender@test.com&quot;,
+    &quot;subject&quot;:&quot;hello customer&quot;,
+    &quot;list_id&quot;:&quot;756589&quot;,
+    &quot;name&quot;:&quot;my_api_campaign&quot;,
+    &quot;body&quot;: &quot;bXkgYXBpIGJvZHk=&quot;,
+    &quot;type&quot;:&quot;draft&quot;
+}
+</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-817f-addf-d136c8f81fde" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81bc-af3e-c4fc4a9ffeb6" class="">Пример запроса создания рассылки с вложением:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-81b1-ab18-d2eea7fb0b3a" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;sender_name&quot;:&quot;my_sender_name&quot;,
+    &quot;sender_email&quot;:&quot;my_sender@test.com&quot;,
+    &quot;subject&quot;:&quot;hello customer&quot;,
+    &quot;list_id&quot;:&quot;756589&quot;,
+    &quot;name&quot;:&quot;my_api_campaign&quot;,
+    &quot;body&quot;: &quot;bXkgYXBpIGJvZHk=&quot;,
+    &quot;attachments&quot;:{
+        &quot;text.txt&quot;:&quot;my content file&quot;
+    }
+}</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-816f-92cb-e2e83e76f159" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81e3-ade3-cb8b8b0e05a3" class="">Пример запроса создания рассылки с вложением (attachments_binary):</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-8124-8031-e6d7984c5f93" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;sender_name&quot;:&quot;my_sender_name&quot;,
+    &quot;sender_email&quot;:&quot;my_sender@test.com&quot;,
+    &quot;subject&quot;:&quot;hello customer&quot;,
+    &quot;list_id&quot;:&quot;756589&quot;,
+    &quot;name&quot;:&quot;my_api_campaign&quot;,
+    &quot;body&quot;: &quot;bXkgYXBpIGJvZHk=&quot;,
+    &quot;attachments_binary&quot;:{
+        &quot;text.txt&quot;:&quot;bXkgY29udGVudCBmaWxlIGluIGJhc2U2NA==&quot;
+    }
+}</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-816f-879f-e912b5b44855" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81d5-9df3-c57ce22aa053" class="">Пример запроса с параметрами сбора статистики:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-81dc-958a-e66cd4368b72" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;sender_name&quot;:&quot;my_sender_name&quot;,
+    &quot;sender_email&quot;:&quot;my_sender_email@test.com&quot;,
+    &quot;subject&quot;:&quot;API campaign&quot;,
+    &quot;list_id&quot;:&quot;89286777&quot;,
+    &quot;name&quot;:&quot;My Campaign&quot;,
+    &quot;body&quot;: &quot;SmFja2llIENoYW4=&quot;,
+    &quot;stats&quot;:{
+        &quot;opens&quot;:true, //включен сбор статистики по открытиям
+        &quot;clicks&quot;:false, //выключен сбор статистики по кликам
+        &quot;utm_campaign&quot;:&quot;MY_UTM&quot;
+        }
+}</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-817d-8f04-f974cdde9cd4" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-8190-83f9-ea21920ac4e1" class="">Параметры для запроса e-mail</h3></div><div style="display:contents" dir="auto"><p id="1287e581-6658-819b-b05d-ce5d53e18d07" class="">
+</p></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-8122-b2d1-de3e3d5562fa" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8167-a938-c197f310eb39"><td id="@t:E" class=""><strong>Параметр</strong></td><td id="qO{A" class="" style="width:130.71875px"><strong>Обязательный</strong></td><td id="NoXA" class="" style="width:397px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-818f-bddc-c4f4e2a2e07a"><td id="@t:E" class=""><strong>sender_name</strong></td><td id="qO{A" class="" style="width:130.71875px">Да</td><td id="NoXA" class="" style="width:397px">Имя отправителя</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ab-9760-c254d3e13c7d"><td id="@t:E" class=""><strong>sender_email</strong></td><td id="qO{A" class="" style="width:130.71875px">Да</td><td id="NoXA" class="" style="width:397px">Email адрес отправителя</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8139-8946-ea525ef08dd2"><td id="@t:E" class=""><strong>subject</strong></td><td id="qO{A" class="" style="width:130.71875px">Да</td><td id="NoXA" class="" style="width:397px">Тема письма</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8164-ac66-fcd2f3255e18"><td id="@t:E" class=""><strong>body1</strong></td><td id="qO{A" class="" style="width:130.71875px">Да</td><td id="NoXA" class="" style="width:397px">Тело письма, кодированное в base64</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8176-99d8-d24fdb2672a7"><td id="@t:E" class=""><strong>template_id1</strong></td><td id="qO{A" class="" style="width:130.71875px">Да</td><td id="NoXA" class="" style="width:397px">ID шаблона загруженного или созданного в сервисе; получить ID шаблона можно при помощи метода «<a href="https://sendpulse.com/ru/integrations/api/bulk-email#template-list">Получить список всех шаблонов в аккаунте</a>» (можно использовать параметры ответа <code>real_id</code> или <code>id</code>)</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8182-9901-d0bdc393357f"><td id="@t:E" class=""><strong>list_id2</strong></td><td id="qO{A" class="" style="width:130.71875px">Да</td><td id="NoXA" class="" style="width:397px">ID адресной книги, если нужно отправить на одну книгу или массив ID адресных книг, если нужно отправить на несколько книг (например <code>[88891852,88891181]</code> ). Максимальное количество книг — 10.<br/>Если вы делаете тестовую рассылку с параметром <code>is_test</code> или сегментированную рассылку с параметром <code>segment_id</code>, вы можете указать только 1 книгу.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81da-ac8b-f9ad3744670e"><td id="@t:E" class=""><strong>segment_id2</strong></td><td id="qO{A" class="" style="width:130.71875px">Да</td><td id="NoXA" class="" style="width:397px">ID сегмента созданного в аккаунте (можно получить в личном кабинете в адресной строке на странице созданного сегмента)</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8191-bdbe-f7753bdf3e6e"><td id="@t:E" class=""><strong>is_test</strong></td><td id="qO{A" class="" style="width:130.71875px"></td><td id="NoXA" class="" style="width:397px">Используется для отправки тестового письма на адрес отправителя, указанный в параметре <code>sender_email</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-816e-9de9-f4b9d0e8536d"><td id="@t:E" class=""><strong>send_date</strong></td><td id="qO{A" class="" style="width:130.71875px"></td><td id="NoXA" class="" style="width:397px">Запланированная дата отправки в формате: Y-m-d H:i:s (например: <code>2016-02-02 23:34:23</code>); не может быть меньше текущей даты</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81c2-9711-ea4095e4f00c"><td id="@t:E" class=""><strong>name</strong></td><td id="qO{A" class="" style="width:130.71875px"></td><td id="NoXA" class="" style="width:397px">Название кампании</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8191-a028-f7a83255a036"><td id="@t:E" class=""><strong>use_dynamic_list</strong></td><td id="qO{A" class="" style="width:130.71875px"></td><td id="NoXA" class="" style="width:397px">Используется для отправки на динамический список для запланированной рассылки. В динамический список входят контакты, которые добавились в книгу с времени создания рассылки до отправки рассылки. Параметр доступен на платном тарифе</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8136-8993-f5707a8c33c3"><td id="@t:E" class=""><strong>attachments</strong></td><td id="qO{A" class="" style="width:130.71875px"></td><td id="NoXA" class="" style="width:397px">Вложенные файлы; вы можете добавить до 5 элементов; ключ - имя файла, а значение - содержимое файла, например,  <code>{&quot;имя1.расширение&quot;:&quot;содержимое_1_файла&quot;, &quot;имя2.расширение&quot;:&quot;содержимое_2_файла&quot;}</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-811b-971b-cfff458c698d"><td id="@t:E" class=""><strong>attachments_binary</strong></td><td id="qO{A" class="" style="width:130.71875px"></td><td id="NoXA" class="" style="width:397px">Вложенные файлы; вы можете добавить до 5 элементов; ключ - имя файла, а значение - содержимое файла, например, <code>{&quot;имя1.расширение&quot;:&quot;base64_от_содержимого_1_файла&quot;, &quot;имя2.расширение&quot;:&quot;base64_от_содержимое_2_файла&quot;}</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81e2-9c78-e35f179030ed"><td id="@t:E" class=""><strong>type</strong></td><td id="qO{A" class="" style="width:130.71875px"></td><td id="NoXA" class="" style="width:397px">Используется для создания рассылки как черновик, в значении передается <code>draft</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81a9-9007-db38137cff92"><td id="@t:E" class=""><strong>body_amp3</strong></td><td id="qO{A" class="" style="width:130.71875px"></td><td id="NoXA" class="" style="width:397px">Тело АМП версии письма, кодированное в base64</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8155-b309-f332430e8606"><td id="@t:E" class=""><strong>stats</strong></td><td id="qO{A" class="" style="width:130.71875px"></td><td id="NoXA" class="" style="width:397px">Используется для включения сбора статистики открытий письма и переходам по ссылкам</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8161-9918-d0807d1d4f7b"><td id="@t:E" class=""><strong>clicks</strong></td><td id="qO{A" class="" style="width:130.71875px"></td><td id="NoXA" class="" style="width:397px">Переход по ссылкам. По умолчанию <code>true</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8177-8bd2-f4ec87262ca0"><td id="@t:E" class=""><strong>opens</strong></td><td id="qO{A" class="" style="width:130.71875px"></td><td id="NoXA" class="" style="width:397px">Открытие рассылки. По умолчанию <code>true</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-812d-84dc-cfaf1ad1f174"><td id="@t:E" class=""><strong>utm_campaign</strong></td><td id="qO{A" class="" style="width:130.71875px"></td><td id="NoXA" class="" style="width:397px">Подстановка пользовательскиих UTM меток во все ссылки в рассылке для Google Analytics и Яндекс.Метрики</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8131-9928-e5375dd5d1ac" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-816d-9b3a-f09271f8bd7c" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-8151-8550-c675364d96bd" class="">Пример запроса СМС-рассылки</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-8161-a077-fd4304f34d3a" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">{
+   &quot;sender&quot;:&quot;Sender&quot;,
+   &quot;phones&quot;:[
+      &quot;380986158966&quot;,
+      &quot;380930452313&quot;
+   ],
+   &quot;body&quot;:&quot;body&quot;,
+   &quot;transliterate&quot;:1,
+   &quot;route&quot;:{
+      &quot;UA&quot;:&quot;sim_ua&quot;
+   },
+   &quot;emulate&quot;:0,
+   &quot;date&quot;:&quot;2021-07-07 10:00:00&quot;
+}</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-813b-8e70-c0b67f4d4a76" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-8155-9a47-efffe5d58426" class="">Параметры запроса СМС-рассылки</h3></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-813e-bb92-d4a022493caf" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81d8-944c-cf6126421ada"><td id="z~h=" class=""><strong>Параметр</strong></td><td id="{@hC" class="" style="width:139px"><strong>Обязательный</strong></td><td id="{W:@" class="" style="width:435px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8176-9bab-d45b3f325d0a"><td id="z~h=" class=""><strong>sender</strong></td><td id="{@hC" class="" style="width:139px">Да</td><td id="{W:@" class="" style="width:435px">Имя отправителя SMS (до 11 символов латиницей, можно с цифрами)</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81df-bb42-fb0437bba452"><td id="z~h=" class=""><strong>phones</strong></td><td id="{@hC" class="" style="width:139px">Да</td><td id="{W:@" class="" style="width:435px">Список телефонов</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-816a-b66d-f12b150405fa"><td id="z~h=" class=""><strong>body</strong></td><td id="{@hC" class="" style="width:139px">Да</td><td id="{W:@" class="" style="width:435px">Текст рассылки</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-810f-9b04-faa0988233d2"><td id="z~h=" class=""><strong>transliterate</strong></td><td id="{@hC" class="" style="width:139px">Да</td><td id="{W:@" class="" style="width:435px">Транслитерация тела (может принимать значения <code>0</code> или <code>1</code>)</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-819c-b83c-f1fde7c428c2"><td id="z~h=" class=""><strong>route*</strong></td><td id="{@hC" class="" style="width:139px"></td><td id="{W:@" class="" style="width:435px">Список каналов для отправки по странам, например, <code>{&quot;UA&quot;:&quot;national&quot;, &quot;BY&quot;:&quot;international&quot;}</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-817e-9b37-d85f2d8fdd23"><td id="z~h=" class=""><strong>emulate</strong></td><td id="{@hC" class="" style="width:139px"></td><td id="{W:@" class="" style="width:435px">Запускает тестовый режим; если <code>emulate=1</code> рассылка формируется,но не будет отправлена и в панели пользователя не отобразится.В ответе API ID рассылки будет  равен <code>0</code></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81e2-a6a1-fc106459d6e7"><td id="z~h=" class=""><strong>date</strong></td><td id="{@hC" class="" style="width:139px"></td><td id="{W:@" class="" style="width:435px">Дата рассылки в формате <code>Y-m-d H:i:s</code></td></tr></div></tbody></table></div></div></details></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">mts</summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1287e581-6658-814e-b32a-d6300c0bceb0"><div style="font-size:1.5em"><span class="icon">🔗</span></div><div style="width:100%"><a href="https://support.mts.ru/mts_marketolog/Rassilki-po-svoei-baze-PRO-i-API-k-nim/dokumentatsiya-rest-api#methods">API</a></div></figure></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8157-80f0-ca0aa47944aa" class="">Отправка SMS рассылок. Через GET и POST запросы. </p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81aa-bdee-fc5319675847" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-81dc-9587-e89b23337f7b" class="">Пример запроса через GET</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-81f7-bdaf-fdd1f7fa7122" class="code code-wrap"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">GET /get/send-sms 
+
+Content-type: application/json
+
+https://api-adapter.marketolog.mts.ru/get/send-sms?login=g_tRW134CVLgdPe4&amp;password=ERGfdg4WK&amp;msisdn=79161234567&amp;from=test_naming&amp;message=test</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8122-a8b8-ded19a725bca" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-8177-bdd6-efe39630e0e1" class="">Параметры запроса через GET</h3></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-8141-8c25-df5c27652596" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8196-bda7-e7297a8185cb"><td id="qdfS" class=""><strong>Параметр</strong></td><td id="AvzW" class="" style="width:136px"><strong>Обязательный</strong></td><td id="YXA\" class="" style="width:428px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81f1-8ae0-c9c7d67f9a90"><td id="qdfS" class="">login</td><td id="AvzW" class="" style="width:136px">да</td><td id="YXA\" class="" style="width:428px">Логин</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81aa-9672-ffd1883c53b6"><td id="qdfS" class="">password</td><td id="AvzW" class="" style="width:136px">да</td><td id="YXA\" class="" style="width:428px">Пароль</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-814a-a40e-cdba5e72f4ea"><td id="qdfS" class="">msisdn</td><td id="AvzW" class="" style="width:136px">да</td><td id="YXA\" class="" style="width:428px">Номер телефона адресата. Формат: 79161234567</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8158-bea3-c59f623e5519"><td id="qdfS" class="">from</td><td id="AvzW" class="" style="width:136px">да</td><td id="YXA\" class="" style="width:428px">Имя отправителя, которое видит получатель</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-814d-ae22-e084942941a1"><td id="qdfS" class="">message</td><td id="AvzW" class="" style="width:136px">да</td><td id="YXA\" class="" style="width:428px">Текст сообщения. Рекомендуем отправлять до 8 сегментов в одном SMS: 536 символов на кириллице и 1224 на латинице. Кодировка — UTF-8.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81bb-b64c-e61407bd0609" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-8180-ad1a-f214769c707f" class="">Пример запроса через POST</h3></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Пример запроса из 1С (для разработчиков 1С)</strong></summary><div class="indented"><div style="display:contents" dir="auto"><p id="1287e581-6658-814d-8f54-d224cf74fc67" class="">
+</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-81db-946c-c05f86fd1100" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Текст = СтрЗаменить(ТекстСообщения, Символы.ПС, &quot; &quot;);
+           СтруктураОтправки = Новый Структура;
+
+           МассивСообщений = Новый Массив;
+
+           Для каждого Адресат Из Адресаты Цикл
+
+                          ОчередноеСообщение = Новый Структура;
+
+                          ОчередноеСообщение.Вставить(&quot;content&quot;, Новый Структура(&quot;short_text&quot;, Текст));
+                          Если НЕ ИспользоватьПользовательскийКласс Тогда
+                                        ОчередноеСообщение.Вставить(&quot;from&quot;,Новый Структура(&quot;sms_address&quot;, Отправитель));
+                          КонецЕсли;
+
+                          МассивАдресата = Новый Массив;
+                          Идентификатор1С = Строка(Новый УникальныйИдентификатор);
+                          МассивАдресата.Добавить(Новый Структура(&quot;msisdn, message_id&quot;, Адресат.Значение, Идентификатор1С));
+
+                          ОчередноеСообщение.Вставить(&quot;to&quot;, МассивАдресата);
+
+                          МассивСообщений.Добавить(ОчередноеСообщение);
+
+                          СохранитьСообщениеВОтправленных(Новый Структура(&quot;Адресат, ТекстСообщения, Идентификатор1С&quot;, Адресат.Значение, Текст, Идентификатор1С));
+
+           КонецЦикла;
+
+           СтруктураОтправки.Вставить(&quot;messages&quot;, МассивСообщений);
+
+           Если ИспользоватьПользовательскийКласс Тогда
+                          СтруктураОтправки.Вставить(&quot;options&quot;, Новый Структура(&quot;class, from&quot;, Класс, Новый Структура(&quot;sms_address&quot;, Отправитель)));
+           КонецЕсли;
+           Запись = Новый ЗаписьJSON;
+           Запись.УстановитьСтроку();
+           ЗаписатьJSON(Запись, Данные);
+           СтрокаJSON = Запись.Закрыть();
+           Соединение = Новый HTTPСоединение(Сервер, 443, Логин, Пароль,,, Новый ЗащищенноеСоединениеOpenSSL());
+           ЗапросHTTP = Новый HTTPЗапрос;
+
+           ЗапросHTTP.Заголовки.Вставить(&quot;Content-type&quot;, &quot;application/json&quot;);
+           ЗапросHTTP.УстановитьТелоИзСтроки(СтрокаJSON);
+           ЗапросHTTP.АдресРесурса = АдресЗапроса;
+
+           Ответ = Соединение.ВызватьHTTPМетод(&quot;POST&quot;,ЗапросHTTP);
+</code></pre></div></div></details></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Пример запроса на Python</strong></summary><div class="indented"><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-8109-9ef6-e89e1247006e" class="code code-wrap"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">import requests
+from requests.auth import HTTPBasicAuth
+def sent_message(login, password, naming, to, text_message):
+   url = &#x27;https://omnichannel.mts.ru/http-api/v1/messages&#x27;
+   body = {
+   &quot;messages&quot;: [
+   {
+   &quot;content&quot;: {
+   &quot;short_text&quot;: text_message
+   },
+   &quot;from&quot;: {
+   &quot;sms_address&quot;: naming
+   },
+   &quot;to&quot;: [
+   {
+   &quot;msisdn&quot;: to
+   }
+   ]
+   }]
+   }
+   resp = requests.post(url , json=body, auth = HTTPBasicAuth(login, password)) 
+   return resp
+     
+def check_message(login, password, message_id):
+   url = &#x27;https://omnichannel.mts.ru/http-api/v1/messages/info&#x27;
+   body = {&quot;int_ids&quot;: [message_id]}
+   resp_info = requests.post(url , json=body, auth = HTTPBasicAuth(login, password))      
+   return resp_info  
+   
+# Параметры отправки
+login = &#x27;ЛОГИН_из_личного_кабинета_раздел_интеграции&#x27;
+password = &#x27;ПАРОЛЬ_из_личного_кабинета_раздел_интеграции&#x27;
+naming = &#x27;НЕЙМИНГ_согласованное_имя_отправителя_из_ЛК_Маркетолога&#x27;
+text_message = &#x27;Текст сообщения&#x27;
+to = &#x27;79001111111&#x27;
+# Отправка сообщения
+sent_message(login, password, naming, to, text_message)
+# Проверка статуса
+if resp.status_code == 200:
+   message_id = resp.json()[&#x27;messages&#x27;][0][&quot;internal_id&quot;]
+   print(&quot;Запрос отработал успешно message_id = &quot; + message_id)
+   resp_info = check_message(login, password, message_id)
+   if resp_info.status_code == 200:
+       event_code = resp_info.json()[&quot;events_info&quot;][0][&quot;events_info&quot;][0][&quot;status&quot;]
+       if event_code == 200:
+           print(&quot;SMS отправлено получателю &quot; + to + &quot;. message_id = &quot; + message_id)
+       elif event_code == 201:
+           print(&quot;SMS НЕ отправлено message_id = &quot; + message_id + &quot; Детали см по кодам ошибок в документации &quot; + str(resp_info.content))
+else:
+   print(&quot;Запрос не отработал. Детали: &quot; + str(resp.content))</code></pre></div></div></details></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Пример запроса на PHP</strong></summary><div class="indented"><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-81bd-8a24-da152247cd8b" class="code code-wrap"><code class="language-Bash" style="white-space:pre-wrap;word-break:break-all">&lt;?php
+
+class Client
+{
+    /**
+     * @var string
+     */
+    var $host;
+    /**
+     * @var string
+     */
+    var $auth;
+
+    var $timeout;
+
+    /**
+     * @param $host string
+     * @param $login string
+     * @param $password string
+     */
+    function __construct($host, $login, $password, $timeout = 60)
+    {
+        $this-&gt;host = $host;
+        $this-&gt;auth = &quot;Basic &quot; . base64_encode($login . &quot;:&quot; . $password);
+
+        $this-&gt;timeout = $timeout;
+    }
+
+    /**
+     * @param $naming string
+     * @param $text string
+     * @param $phone string
+     * @return $id string
+     */
+    function sendSms($naming, $text, $phone)
+    {
+        $req = [
+            &quot;messages&quot; =&gt; [
+                [
+                    &quot;content&quot; =&gt; [
+                        &quot;short_text&quot; =&gt; $text
+                    ],
+                    &quot;to&quot; =&gt; [
+                        [
+                            &quot;msisdn&quot; =&gt; $phone
+                        ]
+                    ],
+                ]
+            ],
+            &quot;options&quot; =&gt; [
+                &quot;class&quot; =&gt; 1,
+                &quot;from&quot; =&gt; [
+                    &quot;sms_address&quot; =&gt; $naming,
+                ],
+            ]
+        ];
+        $respStr = $this-&gt;curlRequest(&quot;messages&quot;, json_encode($req), [], &quot;POST&quot;);
+
+        $resp = json_decode($respStr, true);
+
+        if (isset($resp[&quot;code&quot;])) {
+            var_dump($respStr);
+            return &quot;0&quot;;
+        }
+
+
+        if (!isset($resp[&quot;messages&quot;][0][&quot;internal_id&quot;])) {
+            var_dump($respStr);
+            return &quot;0&quot;;
+        }
+
+        var_dump(&quot;successes response:&quot;, $respStr);
+
+        return $resp[&quot;messages&quot;][0][&quot;internal_id&quot;];
+    }
+
+    /**
+     * @param $ids []string
+     * @return array []
+     */
+    function getSmsInfo($ids)
+    {
+
+        $respStr = $this-&gt;curlRequest(&quot;messages/info&quot;, json_encode([&quot;int_ids&quot; =&gt; $ids]), [], &quot;POST&quot;);
+
+        $resp = json_decode($respStr, true);
+
+        if (isset($resp[&quot;code&quot;])) {
+            var_dump($respStr);
+            return [];
+        }
+
+        var_dump(&quot;successes response:&quot;, $respStr);
+
+        return $resp;
+    }
+
+    /**
+     * @param $url
+     * @param $data
+     * @param $headers
+     * @return bool|string
+     */
+    function curlRequest($url, $data = NULL, $headers = NULL, $method = &quot;GET&quot;)
+    {
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $this-&gt;host . $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this-&gt;timeout);
+
+        if (!empty($data)) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        }
+
+        $headers = array_merge($headers, [&quot;Authorization: &quot; . $this-&gt;auth, &quot;Content-Type: application/json; charset=utf-8&quot;]);
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+
+        $response = curl_exec($ch);
+
+        if (curl_error($ch)) {
+            trigger_error(&#x27;Curl Error:&#x27; . curl_error($ch));
+        }
+
+
+        curl_close($ch);
+        return $response;
+    }
+}
+
+
+$client = new Client(&quot;https://omnichannel.mts.ru/http-api/v1/&quot;, &quot;ЛОГИН&quot;, &quot;ПАРОЛЬ&quot;);
+
+// отправка сообщения
+$id = $client-&gt;sendSms(&quot;НЕЙМИНГ&quot;, &quot;ТЕКСТ СООБЩЕНИЯ&quot;, &quot;79999999999&quot;); // отправка смс
+// если $id == 0, то была ошибка запроса
+
+if ($id != &quot;0&quot;) {
+    // получение статуса по id сообщения
+    $status = $client-&gt;getSmsInfo([$id]);
+    var_dump($status);
+}</code></pre></div></div></details></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Пример запроса JSON</strong></summary><div class="indented"><div style="display:contents" dir="auto"><p id="1287e581-6658-8184-b37d-e230d0bb7ff2" class="">POST /messages</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81ef-bc40-f9855582a20c" class="">Content-type: application/json</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8124-be07-f427da06020c" class="">Пример с использованием одного имени отправителя: 2 сообщения отправляются от имени SMS Naming. В этом случае объект &quot;from&quot; (и, при необходимости, поле &quot;class&quot;) прописываются один раз в объекте &quot;options&quot;</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-816a-bc05-de3efab61a13" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">{
+ &quot;messages&quot;: [
+{
+&quot;content&quot;: {
+&quot;short_text&quot;: &quot;sms text #1&quot;
+},
+&quot;to&quot;: [
+{
+&quot;msisdn&quot;: &quot;79836362346&quot;,
+&quot;message_id&quot;: &quot;10345678-f123-4694-91d7-233df79f65445&quot;
+}
+]
+},
+{
+&quot;content&quot;: {
+&quot;short_text&quot;: &quot;sms text #2&quot;
+},
+&quot;to&quot;: [
+{
+&quot;msisdn&quot;: &quot;79836362347&quot;,
+&quot;message_id&quot;: &quot;10345678-f123-4694-91d7-233df79f65446&quot;
+}
+]
+}
+ ],
+ &quot;options&quot;: {
+&quot;class&quot;: 22,
+&quot;from&quot;: {
+&quot;sms_address&quot;: &quot;SMS Naming&quot;
+}
+ }
+}</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-815b-a09b-fd594cffb814" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8151-a065-e6e6e687755f" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="1287e581-6658-81bf-9d51-f4db04512a18" class="">Параметры запроса</h3></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8148-a353-facc55c99740" class="">Запрос состоит из двух объектов</p></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-8164-897c-c03468f642a5" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81e1-a91f-df1858b8cf7f"><td id="FJ&gt;v" class=""><strong>Параметр</strong></td><td id="&gt;F`A" class="" style="width:134px"><strong>Обязательный</strong></td><td id="fhYi" class="" style="width:387px"><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-817c-a6e1-efcc4a311277"><td id="FJ&gt;v" class="">messages</td><td id="&gt;F`A" class="" style="width:134px">Да</td><td id="fhYi" class="" style="width:387px">Массив сообщений с детализацией. Описание структуры сообщения представлено ниже.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81e2-9355-ddf0a61ba3a9"><td id="FJ&gt;v" class="">options</td><td id="&gt;F`A" class="" style="width:134px">Да</td><td id="fhYi" class="" style="width:387px">Включает в себя параметры, которые также могут присутствовать в каждом отдельном сообщении: &quot;class&quot; и объект &quot;from&quot;.<br/>⚠️ Если в объекте messages все сообщения относятся к одному имени отправителя, рекомендуем передавать вышеуказанные параметры один раз в общем для всех сообщений объекте &quot;options&quot;. В этом случае для каждого сообщения в массиве messages эти параметры можно не передавать. Ниже есть примеры запросов для обоих случаев.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="1287e581-6658-812a-a191-f8fedb998b94" class=""><strong>Структура сообщения: элемент массива &quot;messages&quot;</strong></p></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-810c-8dbf-dba23228b698" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81ec-95ec-eaf64744e3e7"><td id="W?\F" class=""><strong>Параметр</strong></td><td id="HVA^" class="" style="width:141.8125px"><strong>Обязательный</strong></td><td id="TSW|" class="" style="width:106px"><strong>Тип данных</strong></td><td id="tx:r" class=""><strong>Описание</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-8121-8e95-cf3a83cdd3d8"><td id="W?\F" class="">class</td><td id="HVA^" class="" style="width:141.8125px">Нет</td><td id="TSW|" class="" style="width:106px">integer</td><td id="tx:r" class="">Пользовательский класс сообщения. Используется опционально для управления маршрутизацией сообщений. Связь между параметром class и маршрутом настраивают администраторы по запросу Клиента. Пример: class: 1 — отправить в канал SMS</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81b8-875c-cb3a30820e81"><td id="W?\F" class="">from</td><td id="HVA^" class="" style="width:141.8125px">Да, если данные не указаны в &quot;options&quot;</td><td id="TSW|" class="" style="width:106px">object</td><td id="tx:r" class="">Объект с именем отправителя/чата/приложения</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-819a-ae56-d48366c555ed"><td id="W?\F" class="">from =&gt; sms_address</td><td id="HVA^" class="" style="width:141.8125px">Да, если данные не указаны в &quot;options&quot;</td><td id="TSW|" class="" style="width:106px">string</td><td id="tx:r" class="">Имя отправителя SMS (нейминг), которое видит получатель</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-812c-8061-f9751ae74321"><td id="W?\F" class="">to</td><td id="HVA^" class="" style="width:141.8125px">Да</td><td id="TSW|" class="" style="width:106px">object</td><td id="tx:r" class="">Массив объектов с информацией о получателе</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81fc-b9f7-d286b5a7d01b"><td id="W?\F" class="">to =&gt; message_id</td><td id="HVA^" class="" style="width:141.8125px">Нет</td><td id="TSW|" class="" style="width:106px">string</td><td id="tx:r" class="">Идентификатор сообщения клиента</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-814a-9d09-edb5dd7dddc2"><td id="W?\F" class="">to =&gt; msisdn</td><td id="HVA^" class="" style="width:141.8125px">Да</td><td id="TSW|" class="" style="width:106px">string</td><td id="tx:r" class="">Номер телефона адресата. Формат: 79161234567</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-815b-84c5-e6490c58a63f"><td id="W?\F" class="">content</td><td id="HVA^" class="" style="width:141.8125px">Да</td><td id="TSW|" class="" style="width:106px">object</td><td id="tx:r" class="">Объект с информацией о сообщении.</td></tr></div><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81a2-9674-d16c582d3553"><td id="W?\F" class="">content =&gt; short_text string</td><td id="HVA^" class="" style="width:141.8125px">Да</td><td id="TSW|" class="" style="width:106px">string</td><td id="tx:r" class="">Текст сообщения. Рекомендуем отправлять до 8 сегментов в одном SMS: 536 символов на кириллице и 1224 на латинице. Кодировка — UTF-8.</td></tr></div></tbody></table></div></div></details></div></div></details></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">smsprosto.ru</summary><div class="indented"><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1287e581-6658-81d7-9e6a-fb7aa5c47a60" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">http://api.sms-prosto.ru/?method=push_msg&amp;email=YOUR_LOGIN&amp;password=YOUR_PASSWORD&amp;text=SMS_TEXT&amp;phone=SMS_PHONE_NUMBER_OF_THE_RECIPIENT&amp;sender_name=MyBrandName
+</code></pre></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8185-bf3e-f6d4994b3470" class=""><strong>YOUR_LOGIN</strong></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8100-b192-e29e7125b24a" class="">- Логин в системе (Е-майл)</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-818c-a24a-d50aa381ef38" class=""><strong>YOUR_PASSWORD</strong></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8160-939e-d644c0963d2b" class="">- Пароль (получаем при регистрации в системе)</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81e3-8fec-c2dad7fbee5a" class=""><strong>YOUR_API_KEY</strong></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-812b-885d-c021cc3f676c" class="">– API Key, который можно использовать вместо Логина и Пароля</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8185-9132-c8558d760a79" class=""><strong>SMS_TEXT</strong></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8138-9f0f-ea5626b2a7eb" class="">- Текст SMS сообщения</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-817c-bb3c-fd89075e5731" class=""><strong>SMS_PHONE_NUMBER_OF_THE_RECIPIENT</strong></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8178-ac38-e15d31a003a5" class="">- Номер телефона получателя SMS, в любом формате</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8148-bd02-ed7b7fd22119" class=""><strong>MyBrandName</strong></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8145-b028-d67747f5800d" class="">- Буквенное имя отправителя</p></div></div></details></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">epochta.ru</summary><div class="indented"><div style="display:contents" dir="auto"><p id="1287e581-6658-81a2-ab8a-f86748bb0a00" class=""><a href="https://www.epochta.ru/products/sms/sms-api">https://www.epochta.ru/products/sms/sms-api</a></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8143-886a-c732302d8ce8" class="">Отправка СМС происходит путем POST запроса на <a href="http://api.myatompark.com/members/sms/xml.php">скрипт</a>.В передаваемом <strong>POST параметре ‘XML’</strong> находится собственно XML документ следующей структуры:</p></div><div style="display:contents" dir="ltr"><table id="1287e581-6658-816d-bdec-e0cfe9fee7da" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="1287e581-6658-81d9-aab1-d84c37e7637c"><td id="lwMD" class=""><em>12345678910111213141516171819</em></td><td id="@lCD" class=""><code>&lt;</code><code><strong>SMS</strong></code><code>&gt;&lt;</code><code><strong>operations</strong></code><code>&gt;&lt;</code><code><strong>operation</strong></code><code>&gt;SEND&lt;/</code><code><strong>operation</strong></code><code>&gt;&lt;/</code><code><strong>operations</strong></code><code>&gt;&lt;</code><code><strong>authentification</strong></code><code>&gt;&lt;</code><code><strong>username</strong></code><code>&gt;&lt;/</code><code><strong>username</strong></code><code>&gt;&lt;</code><code><strong>password</strong></code><code>&gt;&lt;/</code><code><strong>password</strong></code><code>&gt;&lt;/</code><code><strong>authentification</strong></code><code>&gt;&lt;</code><code><strong>message</strong></code><code>&gt;&lt;</code><code><strong>sender</strong></code><code>&gt;&lt;/</code><code><strong>sender</strong></code><code>&gt;&lt;</code><code><strong>text</strong></code><code>&gt;&lt;/</code><code><strong>text</strong></code><code>&gt;&lt;/</code><code><strong>message</strong></code><code>&gt;&lt;</code><code><strong>numbers</strong></code><code>&gt;&lt;</code><code><strong>number</strong></code><code>&gt;&lt;/</code><code><strong>number</strong></code><code>&gt;&lt;</code><code><strong>number</strong></code><code>&gt;&lt;/</code><code><strong>number</strong></code><code>&gt;&lt;</code><code><strong>number</strong></code> <code>messageID=&quot;msg11&quot;&gt;&lt;/</code><code><strong>number</strong></code><code>&gt;&lt;</code><code><strong>number</strong></code> <code>messageID=&quot;msg12&quot;</code> <code>variables=&quot;var1;var2;var3;&quot;&gt;&lt;/</code><code><strong>number</strong></code><code>&gt;&lt;/</code><code><strong>numbers</strong></code><code>&gt;&lt;/</code><code><strong>SMS</strong></code><code>&gt;</code></td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="1287e581-6658-8143-aae7-cc0109c29f19" class="">
+</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-811f-8af8-d5061f89bed8" class="">
+</p></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0"><strong><a href="https://sigmasms.ru/">sigmasms.ru</a></strong></summary><div class="indented"><div style="display:contents" dir="auto"><p id="1287e581-6658-8106-8b48-f38707789259" class=""><a href="https://online.sigmasms.ru/#/documentation/api/HTTP-REST?id=api">https://online.sigmasms.ru/#/documentation/api/HTTP-REST?id=api</a></p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81c2-b0e5-e407dc41a0ab" class="">Для создания сообщения любого типа используется единая структура запроса, однако значение полей может меняться в зависимости от типа сообщения и других параметров. Чтобы создать сообщение отправьте <code>POST</code> запрос на адрес <code>https://online.sigmasms.ru/api/sendings</code> и укажите в теле JSON объект с параметрами запроса.</p></div><div style="display:contents" dir="auto"><p id="1287e581-6658-81e1-ae52-cefc8ec723b4" class="">Основные параметры запроса:</p></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-81e4-a150-dbd45ee29ea7" class="bulleted-list"><li style="list-style-type:disc"><code>recipient</code> - получатель сообщения. Может иметь разные значения.<div style="display:contents" dir="auto"><ul id="1287e581-6658-8173-85ef-d1b9b672e854" class="bulleted-list"><li style="list-style-type:circle">Укажите <strong>строку</strong> с получателем для <a href="https://online.sigmasms.ru/#/documentation/api/HTTP-REST?id=odno-soobshenie">создания одного сообщения</a>.</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-8161-8e61-ea98abed7465" class="bulleted-list"><li style="list-style-type:circle">Укажите <strong>массив со строками</strong> для создания нескольких сообщений. Подробнее в разделе <strong><a href="https://online.sigmasms.ru/#/documentation/api/HTTP-REST?id=batch-rassylka">batch</a></strong><a href="https://online.sigmasms.ru/#/documentation/api/HTTP-REST?id=batch-rassylka"> рассылок</a>.</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-8126-96a1-decd07823c8e" class="bulleted-list"><li style="list-style-type:circle">Укажите <strong>объект</strong> с параметрами <code>recipient.include</code> и <code>recipient.exclude</code>, в которых передайте <strong>массивы строк</strong> с получателями. Подробнее в разделе <strong><a href="https://online.sigmasms.ru/#/documentation/api/HTTP-REST?id=bulk-rassylka">bulk</a></strong><a href="https://online.sigmasms.ru/#/documentation/api/HTTP-REST?id=bulk-rassylka"> рассылок</a>.</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-810c-87e0-dcd34a804d19" class="bulleted-list"><li style="list-style-type:disc"><code>type</code> - <a href="https://online.sigmasms.ru/#/documentation/api/HTTP-REST?id=sending-types">тип сообщения</a></li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-8198-8dd1-f31b1b4ac271" class="bulleted-list"><li style="list-style-type:disc"><code>payload</code> - объект с данными отправления. Содержимое меняется в зависимости от значения параметра <code>type</code>:<div style="display:contents" dir="auto"><ul id="1287e581-6658-817e-b1ea-f4dd70809d99" class="bulleted-list"><li style="list-style-type:circle">Для <strong>SMS</strong>:<div style="display:contents" dir="auto"><ul id="1287e581-6658-81ce-849d-c0e9907ea91c" class="bulleted-list"><li style="list-style-type:square"><code>payload.sender</code> - имя отправителя</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-81fa-9e8b-c53b19094bf7" class="bulleted-list"><li style="list-style-type:square"><code>payload.text</code> - текст сообщения</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-81b4-bb1a-cbd18a915b14" class="bulleted-list"><li style="list-style-type:circle">Для <strong>Viber</strong>:<div style="display:contents" dir="auto"><ul id="1287e581-6658-8117-a0fd-ccd6886c1963" class="bulleted-list"><li style="list-style-type:square"><code>payload.sender</code> - имя отправителя</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-81cd-ab60-c8d305e4a3ff" class="bulleted-list"><li style="list-style-type:square"><code>payload.text</code> - текст сообщения</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-8145-8541-f5a4929ace95" class="bulleted-list"><li style="list-style-type:square"><code>payload.image</code> - UUID файла в системе</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-8172-8394-f81ede372967" class="bulleted-list"><li style="list-style-type:square"><code>payload.button.text</code> - текст кнопки</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-815c-9924-d45c12ca0434" class="bulleted-list"><li style="list-style-type:square"><code>payload.button.url</code> - URL кнопки с протоколом (например: <code>https://ya.ru</code>)</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-8196-848d-d4c300760933" class="bulleted-list"><li style="list-style-type:circle">Для <strong>WhatsApp</strong>:<div style="display:contents" dir="auto"><ul id="1287e581-6658-8147-86b9-d2abac8a6773" class="bulleted-list"><li style="list-style-type:square"><code>payload.sender</code> - имя отправителя</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-810e-9c9f-d38cc09d5bf4" class="bulleted-list"><li style="list-style-type:square"><code>payload.text</code> - текст сообщения</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-817a-9e83-fcb209d1267f" class="bulleted-list"><li style="list-style-type:square"><code>payload.image</code> - UUID файла в системе</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-813b-95b2-db38bd4ea44b" class="bulleted-list"><li style="list-style-type:square"><code>payload.buttons</code> - массив объектов кнопок (0-3 элемента)</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-81c6-a37c-cd3b63278b01" class="bulleted-list"><li style="list-style-type:square"><code>payload.buttons[].text</code> - текст кнопки</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-8182-9b0d-ca8b1acd4ea3" class="bulleted-list"><li style="list-style-type:square"><code>payload.buttons[].action</code> - действие кнопки (текст, который будет отправлен в ответ по нажатию на кнопку)</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-8146-9455-cd31147d0704" class="bulleted-list"><li style="list-style-type:circle">Для <strong>VK</strong> и <strong>OK</strong>:<div style="display:contents" dir="auto"><ul id="1287e581-6658-814e-8944-ccaeca84e279" class="bulleted-list"><li style="list-style-type:square"><code>payload.sender</code> - имя отправителя</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-810e-9d1a-cdfda7894b86" class="bulleted-list"><li style="list-style-type:square"><code>payload.text</code> - текст сообщения</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-8148-94db-f8725a8fce10" class="bulleted-list"><li style="list-style-type:circle">Для <strong>Voice</strong>:<div style="display:contents" dir="auto"><ul id="1287e581-6658-8163-a07c-cd8f5d56a150" class="bulleted-list"><li style="list-style-type:square"><code>payload.sender</code> - номер телефона, с которого будет осуществляться звонок</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-8151-8a70-d07ded017b42" class="bulleted-list"><li style="list-style-type:square"><code>payload.text</code> - текст сообщения для TTS (Text-To-Speech), который будет прочитан</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-8138-aa78-c69ece88b080" class="bulleted-list"><li style="list-style-type:square"><code>payload.tts</code> - тип TTS, может быть равен <code>aws:maxim</code> (по умолчанию) или один из параметров из списка:<code>aws:maxim</code>, <code>aws:tatyana</code>, <code>yandex:alena</code>, <code>yandex:filipp</code>, <code>yandex:oksana</code>, <code>yandex:jane</code>, <code>yandex:omazh</code>, <code>yandex:zahar</code>, <code>yandex:ermil</code>, <code>yandex:silaerkan</code>, <code>yandex:erkanyavas</code>, <code>yandex:alyss</code>, <code>yandex:nick</code></li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-8161-87c7-f3bfff3a7db7" class="bulleted-list"><li style="list-style-type:square"><code>payload.audio</code> - ID аудио файла в системе</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-819b-8240-fb7c8817b33f" class="bulleted-list"><li style="list-style-type:circle">Для <strong>Flash Call</strong>:<div style="display:contents" dir="auto"><ul id="1287e581-6658-8194-810a-ef0437b16281" class="bulleted-list"><li style="list-style-type:square"><code>payload.sender</code> - имя отправителя</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-81e4-bc05-dd7732e2c4b9" class="bulleted-list"><li style="list-style-type:square"><code>payload.text</code> - текст сообщения</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-818f-a4a6-cd09763e8136" class="bulleted-list"><li style="list-style-type:circle">Для <strong>Telegram</strong>:<div style="display:contents" dir="auto"><ul id="1287e581-6658-81c5-ab41-cc27fc1ad7bc" class="bulleted-list"><li style="list-style-type:square"><code>payload.sender</code> - имя отправителя</li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-817b-84da-f5af153fb34b" class="bulleted-list"><li style="list-style-type:square"><code>payload.text</code> - текст сообщения</li></ul></div></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-8143-8399-f6f322aaf4e0" class="bulleted-list"><li style="list-style-type:disc"><code>fallbacks</code> - массив с параметрами для <a href="https://online.sigmasms.ru/#/documentation/api/HTTP-REST?id=pereotpravleniya">переотправлений</a></li></ul></div><div style="display:contents" dir="auto"><ul id="1287e581-6658-812c-a6d6-eaf855d7321a" class="bulleted-list"><li style="list-style-type:disc"><code>schedule</code> - параметр для создания отложенной рассылки. При указании этого поля рассылка всегда конвертируется в <strong><a href="https://online.sigmasms.ru/#/documentation/api/HTTP-REST?id=bulk-rassylka">bulk</a></strong>, поэтому доступные значения этого поля указаны в <strong><a href="https://online.sigmasms.ru/#/documentation/api/HTTP-REST?id=sending-bulk-schedule">bulk</a></strong><a href="https://online.sigmasms.ru/#/documentation/api/HTTP-REST?id=sending-bulk-schedule"> разделе</a>.</li></ul></div></div></details></div></div></details></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
